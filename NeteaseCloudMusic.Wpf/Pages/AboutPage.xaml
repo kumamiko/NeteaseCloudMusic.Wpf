@@ -23,9 +23,9 @@
                                  Description="LiteDB - A lightweight embedded .NET NoSQL document store in a single datafile"
                                  WebSite="https://www.litedb.org"
                                  License="https://raw.github.com/mbdavid/LiteDB/master/LICENSE"/>
-            <model:ComponentItem Name="NeteaseCloudMusicCloudMusicApi" 
+            <model:ComponentItem Name="NeteaseCloudMusicApi" 
                                  Description="网易云音乐 API"
-                                 WebSite="https://github.com/wwh1004/NeteaseCloudMusicCloudMusicApi"
+                                 WebSite="https://github.com/wwh1004/NeteaseCloudMusicApi"
                                  License="https://licenses.nuget.org/MIT"/>
             <model:ComponentItem Name="Newtonsoft" 
                                  Description="Json.NET is a popular high-performance JSON framework for .NET"
