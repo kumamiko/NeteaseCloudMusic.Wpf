@@ -544,7 +544,7 @@
                            Grid.Column="0"
                            Grid.ColumnSpan="4"
                            Placement="Top"
-                           HorizontalOffset="-180"
+                           HorizontalOffset="-200"
                            VerticalOffset="-20"
                            x:Name="popVolume">
                         <Border>
@@ -572,7 +572,7 @@
                                                 IsMoveToPointEnabled="True"/>
                                     </Grid>
                                 </Border>
-                                <Grid HorizontalAlignment="Right" Margin="0 -1 85 0">
+                                <Grid HorizontalAlignment="Right" Margin="0 -1 65 0">
                                     <Path Fill="White" Data="M0 0 L10 10 L20 0 z" 
                                           />
                                     <Path Data="M0 0 L10 10 L20 0" Stroke="#dddde1" StrokeThickness="1"
