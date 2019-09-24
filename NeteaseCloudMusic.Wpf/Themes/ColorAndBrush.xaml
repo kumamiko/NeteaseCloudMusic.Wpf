@@ -1,0 +1,42 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:NeteaseCloudMusic.Wpf.Themes">
+    
+    <Color x:Key="TitleBackground_Defalt_Color" >#bc2f2e</Color>
+    <Color x:Key="TitleBackground_Hover_Color" >#e81023</Color>
+
+    <SolidColorBrush x:Key="TitleBackground_Defalt_Brush" Color="{StaticResource TitleBackground_Defalt_Color}"/>
+    <SolidColorBrush x:Key="TitleBackground_Hover_Brush" Color="{StaticResource TitleBackground_Hover_Color}"/>
+    
+    <SolidColorBrush x:Key="WindowButtonBackground_Default_Brush" Color="{StaticResource TitleBackground_Defalt_Color}"/>
+    <SolidColorBrush x:Key="WindowButtonBackground_Hover_Brush" Color="{StaticResource TitleBackground_Hover_Color}"/>
+    
+    <SolidColorBrush x:Key="ListViewItemBackground_Hover_Brush" Color="#e8e8eb"/>
+    <SolidColorBrush x:Key="ListViewItemBackground_Select_Brush" Color="#dddde1"/>
+    
+    <SolidColorBrush x:Key="BorderBrush_Default_Brush" Color="#dddde1"/>
+    <SolidColorBrush x:Key="BorderBrush_Light_Brush" Color="#e4e4e7"/>
+    
+    <SolidColorBrush x:Key="IconForeground_Default_Brush" Color="#666666"/>
+    <SolidColorBrush x:Key="IconForeground_Light_Brush" Color="#999"/>
+    
+    <SolidColorBrush x:Key="ButtonIconForeground_Default_Brush" Color="#8b8b8c"/>
+    <SolidColorBrush x:Key="ButtonIconForeground_Hover_Brush" Color="#464647"/>
+
+    <SolidColorBrush x:Key="TextForeground_Default_Brush" Color="#333"/>
+    <SolidColorBrush x:Key="TextForeground_Light_Brush" Color="#999999"/>
+    <SolidColorBrush x:Key="TextForeground_Hover_Brush" Color="#666666"/>
+    
+    <SolidColorBrush x:Key="AlternationIndexBackground_1_Default_Brush" Color="#f4f4f6"/>
+    <SolidColorBrush x:Key="AlternationIndexBackground_1_Hover_Brush" Color="#f2f2f3"/>
+    <SolidColorBrush x:Key="AlternationIndexBackground_2_Default_Brush" Color="#fafafc"/>
+    <SolidColorBrush x:Key="AlternationIndexBackground_2_Hover_Brush" Color="#f2f2f3"/>
+    <SolidColorBrush x:Key="AlternationIndexBackground_Select_Brush" Color="#e8e8ea"/>
+    
+    <SolidColorBrush x:Key="GridBackground_Default_Brush" Color="#fafafc"/>
+    
+    <SolidColorBrush x:Key="ButtonBorderBrush_Default_Brush" Color="#cccdd2"/>
+    <SolidColorBrush x:Key="ButtonBackground_Default_Brush" Color="#88f6f6f8"/>
+    
+    <SolidColorBrush x:Key="PathFill_Default_Brush" Color="{StaticResource TitleBackground_Defalt_Color}"/>
+</ResourceDictionary>

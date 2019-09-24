@@ -1,0 +1,31 @@
+﻿<Page x:Class="NeteaseCloudMusic.Wpf.Pages.MvPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:NeteaseCloudMusic.Wpf.Pages"
+      xmlns:vm="clr-namespace:NeteaseCloudMusic.Wpf.ViewModel"
+      mc:Ignorable="d" 
+      d:DataContext="{d:DesignInstance vm:MvViewModel}"
+      xmlns:uc="clr-namespace:NeteaseCloudMusic.Wpf.UserControls"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="MvPage"
+      Background="#fafafc">
+    <Grid Margin="25 0 25 20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid HorizontalAlignment="Stretch" Height="50"
+              >
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="{Binding Mv.Name}"/>
+                <TextBlock Text="{Binding Mv.ArtistName}" Margin="20 0" Foreground="#1a5a99" FontSize="11"/>
+            </StackPanel>
+            <TextBlock Text="{Binding Mv.PlayCount, Converter={StaticResource PlayCountToStringConverter}, StringFormat=播放: {0}}" HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       Foreground="{StaticResource TextForeground_Light_Brush}"/>
+        </Grid>
+        <uc:UCMvPlayer Grid.Row="1"/>
+    </Grid>
+</Page>

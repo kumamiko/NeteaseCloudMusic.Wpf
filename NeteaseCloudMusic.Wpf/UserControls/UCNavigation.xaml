@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="NeteaseCloudMusic.Wpf.UserControls.UCNavigation"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NeteaseCloudMusic.Wpf.UserControls"
+             mc:Ignorable="d" 
+             Background="#f3f3f5"
+             BorderBrush="#dddde1"
+             BorderThickness="0 0 1 0"
+             Width="192"
+             d:DesignHeight="300" d:DesignWidth="192">
+    <UserControl.Resources>
+        <Storyboard x:Key="Close">
+            <DoubleAnimation Storyboard.TargetProperty="Width"
+                             To="44" Duration="0:0:0.3">
+                <DoubleAnimation.EasingFunction>
+                    <QuarticEase/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Key="Open">
+            <DoubleAnimation Storyboard.TargetProperty="Width"
+                             To="192" Duration="0:0:0.3">
+                <DoubleAnimation.EasingFunction>
+                    <QuarticEase/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="44" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0"
+                Width="44" Height="44"
+                Background="Transparent"
+                Foreground="Black"
+                Content="&#xE700;"
+                BorderThickness="0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                FontSize="14"
+                Style="{StaticResource ScaleButton}"
+                FontFamily="{StaticResource SegoeAssets}"
+                x:Name="btnOpenCloseNavigation"/>
+        <ListView Grid.Row="1" BorderThickness="0" Background="Transparent"
+                  ItemTemplate="{StaticResource NavigationTemplate}"
+                  ItemContainerStyle="{StaticResource ListViewNavigationItem}"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  SelectionMode="Single"
+                  Margin="-1"
+                  ItemsSource="{Binding NavigationList}"    
+                  x:Name="listviewNavigation"
+                  />
+        <Grid Grid.Row="2">
+            <Border BorderThickness="0 1 0 0" BorderBrush="{StaticResource BorderBrush_Default_Brush}"/>
+            <WrapPanel VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal"
+                            Width="100"
+                            Height="60">
+                    <Image Width="30" Height="30"
+                           Margin="7 0"
+                           Source="../Resources/Image/default_cover.png">
+                        <Image.OpacityMask>
+                            <VisualBrush>
+                                <VisualBrush.Visual>
+                                    <Ellipse Height="35" Width="35" Fill="Black"/>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Image.OpacityMask>
+                    </Image>
+                    <TextBlock Text="用户名" VerticalAlignment="Center"
+                               Margin="5 0 0 0"/>
+                </StackPanel>
+                <Button Style="{StaticResource ScaleButton}"
+                        Background="Transparent"
+                        Grid.Column="2"
+                        Width="44"
+                        Height="44"
+                        >
+                    <TextBlock  FontFamily="{StaticResource SegoeAssets}"
+                                Text="&#xE8BD;"
+                                Foreground="#999999"
+                                TextAlignment="Center"
+                                Margin="0 0 0 0"
+                                FontSize="16"
+                                />
+                </Button>
+                <Button Style="{StaticResource ScaleButton}"
+                        Background="Transparent"
+                        Grid.Column="2"
+                        Width="44"
+                        Height="44"
+                        x:Name="btnOpenCloseSetting">
+                    <TextBlock  FontFamily="{StaticResource SegoeAssets}"
+                                Text="&#xE115;"
+                                Foreground="#999999"
+                                TextAlignment="Center"
+                                Margin="0 0 0 0"
+                                FontSize="16"
+                                />
+                </Button>
+            </WrapPanel>
+        </Grid>
+    </Grid>
+</UserControl>

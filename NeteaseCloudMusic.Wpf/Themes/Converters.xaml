@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converter="clr-namespace:NeteaseCloudMusic.Wpf.Converter">
+    <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    <converter:TextToVisibilityConverter x:Key="TextToVisibilityConverter"/>
+    <converter:TextToCollapsedConverter x:Key="TextToCollapsedConverter"/>
+    <converter:PlayingToBrushConverter x:Key="PlayingToBrushConverter"/>
+    <converter:PlayingToVisibilityConverter x:Key="PlayingToVisibilityConverter"/>
+    <converter:VolumeToFontIconConverter x:Key="VolumeToFontIconConverter"/>
+    <converter:IntToVisibilityConverter x:Key="IntToVisibilityConverter"/>
+    <converter:StringToArtistTransConverter x:Key="StringToArtistTransConverter"/>
+    <converter:NullImageConverter x:Key="NullImageConverter"/>
+    <converter:StringToUriConverter x:Key="StringToUriConverter"/>
+    <converter:IntToCollapsedConverter x:Key="IntToCollapsedConverter"/>
+    <converter:PlayModeToStreamGeometryConverter x:Key="PlayModeToStreamGeometryConverter"/>
+    <converter:PlayCountToStringConverter x:Key="PlayCountToStringConverter"/>
+</ResourceDictionary>
