@@ -383,7 +383,8 @@
                         </Image.Source>
                     </Image>
                 </Border>
-                <Image Height="110" Width="20" Source="pack://application:,,,/Resources/Image/album.png"/>
+                <Image Height="110" Width="20" Source="pack://application:,,,/Resources/Image/album.png"
+                       Stretch="Fill"/>
             </StackPanel>
             <TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontSize="13"
                         Foreground="#333"

@@ -388,7 +388,7 @@ namespace NeteaseCloudMusic.Wpf.Services
                 var artistDetail = await $"http://music.163.com/api/artist/{artistNo}".WithTimeout(3).GetJsonAsync<GetArtistDetail.ArtistDetail>();
 
                 artistInfo.Artist = artistDetail.artist.name;
-                artistInfo.PicUrl = artistDetail.artist.picUrl;
+                artistInfo.PicUrl = artistDetail.artist.img1v1Url;
                 artistInfo.MusicSize = artistDetail.artist.musicSize;
                 artistInfo.AlbumSize = artistDetail.artist.albumSize;
                 artistInfo.MvSize = artistDetail.artist.mvSize;

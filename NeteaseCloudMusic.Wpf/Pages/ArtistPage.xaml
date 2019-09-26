@@ -17,7 +17,7 @@
     <Grid Margin="30 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
-            <RowDefinition Height="180" />
+            <RowDefinition Height="200" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Border Grid.RowSpan="2">
@@ -26,7 +26,7 @@
                                   Source="{Binding ArtistInfo.PicUrl, Converter={StaticResource StringToUriConverter}}" Stretch="UniformToFill"/>
             <Border.OpacityMask>
                 <LinearGradientBrush StartPoint="0.5 0" EndPoint="0.5 1">
-                    <GradientStop Color="Black" Offset="0"/>
+                    <GradientStop Color="Black" Offset="-0.5"/>
                     <GradientStop Color="Transparent" Offset="1"/>
                 </LinearGradientBrush>
             </Border.OpacityMask>
@@ -42,8 +42,8 @@
             	<ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Border Margin="0 0 20 0" BorderBrush="#dddde1" BorderThickness="1"
-                    Width="180">
+            <Border Margin="0 0 20 0" BorderBrush="#e7e7e9" BorderThickness="1"
+                    Width="200">
                 <controls:FadeInImage Source="{Binding ArtistInfo.PicUrl, Converter={StaticResource StringToUriConverter}}"
                                       Stretch="UniformToFill"
                                       RenderOptions.BitmapScalingMode="HighQuality"/>
@@ -52,18 +52,27 @@
                   >
                 <TextBlock Text="{Binding ArtistInfo.Artist}" FontSize="20"/>
                 <StackPanel VerticalAlignment="Center">
-                    <TextBlock Margin="0 0 0 10">
-                        <Run Text="单曲数 : "/>
-                        <Run Text="{Binding ArtistInfo.MusicSize}" Foreground="{StaticResource TextForeground_Light_Brush}"/>
-                    </TextBlock>
-                    <TextBlock Margin="0 0 0 10">
-                        <Run Text="专辑数 : "/>
-                        <Run Text="{Binding ArtistInfo.AlbumSize}" Foreground="{StaticResource TextForeground_Light_Brush}"/>
-                    </TextBlock>
-                    <TextBlock>
-                        <Run Text="MV数 : "/>
-                        <Run Text="{Binding ArtistInfo.MvSize}" Foreground="{StaticResource TextForeground_Light_Brush}"/>
-                    </TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <Path Data="{StaticResource Icon.Music}" Fill="#999" Margin="0 0 5 0"/>
+                        <TextBlock Margin="0 0 0 10">
+                            <Run Text="单曲数 : "/>
+                            <Run Text="{Binding ArtistInfo.MusicSize}" Foreground="{StaticResource TextForeground_Light_Brush}"/>
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Path Data="{StaticResource Icon.Local}" Fill="#999" Margin="0 0 5 0"/>
+                        <TextBlock Margin="0 0 0 10">
+                            <Run Text="专辑数 : "/>
+                            <Run Text="{Binding ArtistInfo.AlbumSize}" Foreground="{StaticResource TextForeground_Light_Brush}"/>
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Path Data="{StaticResource Icon.Play}" Fill="#999" Margin="0 0 5 0"/>
+                        <TextBlock>
+                            <Run Text="MV数 : "/>
+                            <Run Text="{Binding ArtistInfo.MvSize}" Foreground="{StaticResource TextForeground_Light_Brush}"/>
+                        </TextBlock>
+                    </StackPanel>
                 </StackPanel>
             </Grid>
         </Grid>
