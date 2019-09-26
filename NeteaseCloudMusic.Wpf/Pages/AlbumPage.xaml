@@ -34,7 +34,8 @@
             <TextBlock Text="专辑" Margin="30 20" Foreground="{StaticResource TextForeground_Hover_Brush}"/>
             <Grid>
                 <Border Height="200" Width="{Binding RelativeSource={RelativeSource Self},Path=Height }"
-                        VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30 50 0 0">
+                        VerticalAlignment="Top" HorizontalAlignment="Left" Margin="30 50 0 0"
+                        BorderThickness="1" BorderBrush="#e7e7e9">
                     <Grid>
                         <controls:FadeInImage Stretch="UniformToFill" Source="{Binding Album.PicUrl, Converter={StaticResource StringToUriConverter}}"
                                               RenderOptions.BitmapScalingMode="HighQuality"/>
@@ -55,7 +56,10 @@
                         </StackPanel>
                     </Grid>
                 </Border>
-                <Grid Margin="250 50 0 0">
+                <Image Height="200" Width="40" Source="pack://application:,,,/Resources/Image/album_big.png"
+                       Stretch="Fill" HorizontalAlignment="Left"
+                       Margin="230 50 0 0" VerticalAlignment="Top"/>
+                <Grid Margin="290 50 0 0">
                     <StackPanel>
                         <TextBlock Text="{Binding Album.Name}" FontWeight="Light" FontSize="20" Foreground="Black"/>
                         <StackPanel Orientation="Horizontal" Margin="0 10">
