@@ -136,7 +136,7 @@
                 <controls:AnimatedTab BorderThickness="0"
                                       SelectedIndex="{Binding SearchTabIndex}"
                                       Background="Transparent"
-                                      >
+                                      x:Name="tab">
                     <i:Interaction.Behaviors>
                         <behaviors:AnimatedTabChangeBehavior/>
                     </i:Interaction.Behaviors>
@@ -160,6 +160,7 @@
                                       ItemContainerStyle="{StaticResource ListViewMusicItem}"
                                       ItemsSource="{Binding Musics}"
                                       SelectionMode="Extended"
+                                      Width="{Binding ElementName=tab, Path=ActualWidth}"
                                       SelectionChanged="StopSelectionChangedEventBubbling">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseDoubleClick">
@@ -241,6 +242,7 @@
                                       ItemContainerStyle="{StaticResource ListViewMusicItem}"
                                       ItemsSource="{Binding Artists}"
                                       SelectionMode="Single"
+                                      Width="{Binding ElementName=tab, Path=ActualWidth}"
                                       SelectionChanged="StopSelectionChangedEventBubbling">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseLeftButtonUp">
@@ -281,6 +283,7 @@
                                       ItemContainerStyle="{StaticResource ListViewMusicItem}"
                                       ItemsSource="{Binding Albums}"
                                       SelectionMode="Single"
+                                      Width="{Binding ElementName=tab, Path=ActualWidth}"
                                       SelectionChanged="StopSelectionChangedEventBubbling">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseLeftButtonUp">
@@ -317,6 +320,7 @@
                                       ItemContainerStyle="{StaticResource ListViewMvItem}"
                                       ItemsSource="{Binding Mvs}"
                                       SelectionMode="Single"
+                                      Width="{Binding ElementName=tab, Path=ActualWidth}"
                                       SelectionChanged="StopSelectionChangedEventBubbling">
                                 <ListView.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -362,6 +366,7 @@
                                       ItemContainerStyle="{StaticResource ListViewMusicItem}"
                                       ItemsSource="{Binding Playlists}"
                                       SelectionMode="Single"
+                                      Width="{Binding ElementName=tab, Path=ActualWidth}"
                                       SelectionChanged="StopSelectionChangedEventBubbling">
                                 <!--<i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseLeftButtonUp">
