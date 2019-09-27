@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Threading;
 
@@ -340,10 +341,15 @@ namespace NeteaseCloudMusic.Wpf
         {
             if (playing)
             {
+                thumbButtonPauseOrResume.ImageSource = this.FindResource("Image_Play") as BitmapImage;
                 media.Pause();
                 timer?.Stop();
             }
-            else media.Play();
+            else
+            {
+                thumbButtonPauseOrResume.ImageSource = this.FindResource("Image_Pause") as BitmapImage;
+                media.Play();
+            }
 
             timer?.Start();
 
@@ -386,6 +392,11 @@ namespace NeteaseCloudMusic.Wpf
         private void ComboboxSpeed_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             media.SpeedRatio = double.Parse((comboboxSpeed.SelectedItem as ComboBoxItem).Content.ToString());
+        }
+
+        private void thumbButton_PauseOrResume(object sender, EventArgs e)
+        {
+            PauseOrResume(null, null);
         }
     }
 }

@@ -36,6 +36,13 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
         private BitmapImage _cover = _defaultcover;
 
         #region ÊôÐÔ
+        private bool _isThumbButtonEnabled = false;
+        
+        public bool IsThumbButtonEnabled
+        {
+            get => _isThumbButtonEnabled;
+            set => Set(ref _isThumbButtonEnabled, value);
+        }
         public LocalMusicViewModel LocalMusicVM
         {
             get => _localMusicVM;
@@ -97,6 +104,7 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
                     });
                 });
                 MessengerInstance.Send<bool>(true, "Play");
+                IsThumbButtonEnabled = true;
             }
         }
 
