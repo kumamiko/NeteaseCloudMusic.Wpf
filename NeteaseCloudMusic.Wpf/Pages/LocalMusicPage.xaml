@@ -82,7 +82,7 @@
                                     Padding="10 0" 
                                     Style="{StaticResource ScaleButton}"
                                     Background="{StaticResource ButtonBackground_Default_Brush}"
-                                    Command="{Binding GetAllMusicInfoCmd}"
+                                    Command="{Binding GetAllMusicsCmd}"
                                     Margin="0 0 10 10">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="&#xE8F4;" FontFamily="{StaticResource SegoeAssets}" Foreground="{StaticResource TextForeground_Hover_Brush}" VerticalAlignment="Center"/>
@@ -94,10 +94,10 @@
                                     Padding="10 0" Background="{StaticResource ButtonBackground_Default_Brush}"
                                     Style="{StaticResource ScaleButton}"
                                     Margin="0 0 10 10"
-                                    Command="{Binding NotYetCmd}">
+                                    Command="{Binding AddSomeMusicsCmd}">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="&#xE8BD;" FontFamily="{StaticResource SegoeAssets}" Foreground="{StaticResource TextForeground_Hover_Brush}" VerticalAlignment="Center"/>
-                                    <TextBlock Text="评论(64)" VerticalAlignment="Center" FontSize="12" 
+                                    <TextBlock Text="添加歌曲" VerticalAlignment="Center" FontSize="12" 
                                            Foreground="Black" Margin="5 0 0 0"/>
                                 </StackPanel>
                             </Button>

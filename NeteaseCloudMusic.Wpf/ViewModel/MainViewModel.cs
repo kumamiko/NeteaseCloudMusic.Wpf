@@ -123,6 +123,8 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
         public RelayCommand ClearPlaylistMusicsCmd => new Lazy<RelayCommand>(() =>
             new RelayCommand(ClearPlaylistMusics)).Value;
 
+        public RelayCommand ClearLocalMusicCmd => new Lazy<RelayCommand>(() =>
+            new RelayCommand(ClearLocalMusic)).Value;
 
         public RelayCommand<object> RemoveFromListCmd => new Lazy<RelayCommand<object>>(() =>
             new RelayCommand<object>(RemoveFromList)).Value;
@@ -330,6 +332,12 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
             }
         }
 
+        private void ClearLocalMusic()
+        {
+            if (_localMusicVM == null) _localMusicVM = SimpleIoc.Default.GetInstance<LocalMusicViewModel>();
+
+            _localMusicVM.ClearLocalMusic();
+        }
     }
     #endregion
 }

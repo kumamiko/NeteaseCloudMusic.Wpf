@@ -697,7 +697,7 @@
                             BorderBrush="{StaticResource Brush_Red}"
                             Margin="20 10"
                             Padding="0 5"
-                            Command="{Binding LocalMusicVM.ClearLocalMusicCmd}"/>
+                            Command="{Binding ClearLocalMusicCmd}"/>
                 </StackPanel>
             </Border>
         </Grid>
