@@ -74,5 +74,13 @@ namespace NeteaseCloudMusic.Wpf.UserControls
         {
             if (e.MouseDevice.LeftButton == MouseButtonState.Pressed) changeSliderFlag = true;
         }
+
+        private void media_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0 && media.Volume <= 0.9)
+                media.Volume += 0.1;
+            if (e.Delta < 0 && media.Volume >= 0.1)
+                media.Volume -= 0.1;
+        }
     }
 }

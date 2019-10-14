@@ -56,6 +56,7 @@ namespace NeteaseCloudMusic.Wpf.Model
         private bool _playing;
         private string _artistIds;
         private int _albumId;
+        private int _mvId;
 
         [BsonId]
         public Guid Guid { get; set; }
@@ -114,6 +115,11 @@ namespace NeteaseCloudMusic.Wpf.Model
             set => Set(ref _albumId, value);
         }
 
+        public int MvId
+        {
+            get => _mvId;
+            set => Set(ref _mvId, value);
+        }
         public bool Playing
         {
             get => _playing;

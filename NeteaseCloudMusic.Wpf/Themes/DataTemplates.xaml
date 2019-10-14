@@ -199,7 +199,8 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100" />
                     <ColumnDefinition Width="30" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="40" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="{Binding Id, StringFormat={}{0:D2}}"  Padding="20 0 0 0"
                            FontSize="12"
@@ -215,6 +216,16 @@
                            ToolTip="{Binding Name}" HorizontalAlignment="Left" FontSize="13"
                            TextTrimming="CharacterEllipsis"
                            Foreground="{Binding Path=Playing,Converter={StaticResource PlayingToBrushConverter}}"/>
+                <Border Grid.Column="3"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        BorderThickness="1"
+                        BorderBrush="#cf7e7e"
+                        Visibility="{Binding MvId,Converter={StaticResource IntToVisibilityConverter}}">
+                    <TextBlock Text="MV" FontSize="8" Foreground="#b52e2e"
+                               TextAlignment="Center"
+                               Padding="5 0"/>
+                </Border>
             </Grid>
             <TextBlock Grid.Column="1" Text="{Binding Artist}" ToolTip="{Binding Artist}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" FontSize="12" Foreground="{StaticResource TextForeground_Light_Brush}"/>
             <TextBlock Grid.Column="2" Text="{Binding Album}" ToolTip="{Binding Album}" TextTrimming="CharacterEllipsis" Margin="20 0 0 0" HorizontalAlignment="Left" FontSize="12" Foreground="{StaticResource TextForeground_Light_Brush}"/>

@@ -35,7 +35,8 @@
         <MediaElement x:Name="media" 
                       LoadedBehavior="Manual"
                       MediaOpened="Media_MediaOpened"
-                      Source="{Binding Mv.Url, Converter={StaticResource StringToUriConverter}}"/>
+                      Source="{Binding Mv.Url, Converter={StaticResource StringToUriConverter}}"
+                      MouseWheel="media_MouseWheel"/>
         <Grid Height="40" VerticalAlignment="Bottom"
               Background="#99000000"
               x:Name="gridTools">

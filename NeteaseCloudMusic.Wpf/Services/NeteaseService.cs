@@ -64,6 +64,7 @@ namespace NeteaseCloudMusic.Wpf.Services
                             Duration = $"{duration.TotalMinutes:00}:{duration.Seconds:00}",
                             File = @"http://music.163.com/song/media/outer/url?id=" + t.id + ".mp3",
                             Album = t.album.name,
+                            MvId = t.mvid,
                             Type = 1/*网页音乐*/
                         }); ;
                 }
@@ -116,6 +117,7 @@ namespace NeteaseCloudMusic.Wpf.Services
                                 ArtistIds = artistsIdsTemp[0],/*先做成只能搜索单个歌手*/
                                 Duration = $"{duration.TotalMinutes:00}:{duration.Seconds:00}",
                                 File = @"http://music.163.com/song/media/outer/url?id=" + t["id"].ToString() + ".mp3",
+                                MvId = (int)t["mvid"],
                                 Type = 1/*网页音乐*/
                             });
                     }
@@ -406,6 +408,7 @@ namespace NeteaseCloudMusic.Wpf.Services
                         Duration = $"{duration.TotalMinutes:00}:{duration.Seconds:00}",
                         File = @"http://music.163.com/song/media/outer/url?id=" + song.id + ".mp3",
                         Album = song.album.name,
+                        MvId = song.mvid,
                         Type = 1/*网页音乐*/
                     });
                 }

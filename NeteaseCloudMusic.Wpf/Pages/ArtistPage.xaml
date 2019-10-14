@@ -142,7 +142,11 @@
                                     </TextBlock>
                                 </MenuItem.Header>
                             </MenuItem>
-                            <MenuItem Header="查看MV"/>
+                            <MenuItem Header="查看MV"
+                                      Visibility="{Binding Path=PlacementTarget.SelectedItem.MvId, RelativeSource={RelativeSource AncestorType=ContextMenu},Converter={StaticResource IntToVisibilityConverter}}"
+                                      Command="{Binding SearchVM.NavigateToMvCmd}"
+                                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}},
+                                      Path=PlacementTarget.SelectedItem.MvId}"/>
                             <Separator/>
                             <MenuItem Header="添加到列表" Command="{Binding SearchVM.AddToListCmd}" 
                                                 CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}},
