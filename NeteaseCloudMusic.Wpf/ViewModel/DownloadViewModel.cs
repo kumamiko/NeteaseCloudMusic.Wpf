@@ -89,13 +89,14 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
             });
         }
 
-        public void AddAndStart(string filepath, string url, int no)
+        public void AddAndStart(string filepath, string url, int no, int type = 0)
         {
             var item = new DownloadItemViewModel(_downloadService)
             {
                 FilePath = filepath,
                 Url = url,
-                No = no
+                No = no,
+                Type = type
             };
 
             Downloads.Add(item);

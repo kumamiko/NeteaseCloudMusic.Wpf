@@ -113,32 +113,35 @@ namespace NeteaseCloudMusic.Wpf.Services
                 return;
             }
 
-            Task.Run(async () =>
+            if (downloadProgress.Type == 0) /*是音乐就给音乐添加信息*/
             {
-                if (!File.Exists(downloadProgress.FilePath)) return;
-                var coverAndDetail = await _NeteaseCloudMusicService.GetCoverAndDetailAsync(downloadProgress.No);
-
-                try
+                Task.Run(async () =>
                 {
-                    TagLib.File file = TagLib.File.Create(downloadProgress.FilePath);
-                    TagLib.Id3v2.AttachedPictureFrame cover = new TagLib.Id3v2.AttachedPictureFrame
+                    if (!File.Exists(downloadProgress.FilePath)) return;
+                    var coverAndDetail = await _NeteaseCloudMusicService.GetCoverAndDetailAsync(downloadProgress.No);
+
+                    try
                     {
-                        Type = TagLib.PictureType.FrontCover,
-                        Description = "Cover",
-                        MimeType = System.Net.Mime.MediaTypeNames.Image.Jpeg,
-                        Data = coverAndDetail.cover.ToBytes(),
-                        TextEncoding = TagLib.StringType.UTF16
-                    };
+                        TagLib.File file = TagLib.File.Create(downloadProgress.FilePath);
+                        TagLib.Id3v2.AttachedPictureFrame cover = new TagLib.Id3v2.AttachedPictureFrame
+                        {
+                            Type = TagLib.PictureType.FrontCover,
+                            Description = "Cover",
+                            MimeType = System.Net.Mime.MediaTypeNames.Image.Jpeg,
+                            Data = coverAndDetail.cover.ToBytes(),
+                            TextEncoding = TagLib.StringType.UTF16
+                        };
 
-                    file.Tag.Pictures = new TagLib.IPicture[] { cover };
-                    file.Tag.Performers = coverAndDetail.detail.songs[0].artists.Select(t => t.name).ToArray();
-                    file.Tag.Title = coverAndDetail.detail.songs[0].name;
-                    file.Tag.Album = coverAndDetail.detail.songs[0].album.name;
+                        file.Tag.Pictures = new TagLib.IPicture[] { cover };
+                        file.Tag.Performers = coverAndDetail.detail.songs[0].artists.Select(t => t.name).ToArray();
+                        file.Tag.Title = coverAndDetail.detail.songs[0].name;
+                        file.Tag.Album = coverAndDetail.detail.songs[0].album.name;
 
-                    file.Save();
-                }
-                catch { }
-            });
+                        file.Save();
+                    }
+                    catch { }
+                });
+            }
 
             downloadProgress.Report(new DownloadInfo
             {

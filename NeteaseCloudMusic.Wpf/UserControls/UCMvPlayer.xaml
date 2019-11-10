@@ -36,7 +36,16 @@
                       LoadedBehavior="Manual"
                       MediaOpened="Media_MediaOpened"
                       Source="{Binding Mv.Url, Converter={StaticResource StringToUriConverter}}"
-                      MouseWheel="media_MouseWheel"/>
+                      MouseWheel="media_MouseWheel">
+            <MediaElement.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="下载" 
+                              Command="{Binding AddToDownloadCmd}"
+                              CommandParameter="{Binding Mv.Url}"
+                              Width="150"/>
+                </ContextMenu>
+            </MediaElement.ContextMenu>
+        </MediaElement>
         <Grid Height="40" VerticalAlignment="Bottom"
               Background="#99000000"
               x:Name="gridTools">

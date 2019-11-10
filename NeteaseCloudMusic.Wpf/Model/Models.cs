@@ -272,7 +272,7 @@ namespace NeteaseCloudMusic.Wpf.Model
         }
     }
 
-    public class Playlist : ObservableObject
+    public class PlaylistInfo : ObservableObject
     {
         private long _id;
         private string _cover;
@@ -283,6 +283,7 @@ namespace NeteaseCloudMusic.Wpf.Model
         private int _bookCount;
         private int _userId;
         private string _description;
+        private string _createTime;
 
         public long Id
         {
@@ -336,6 +337,12 @@ namespace NeteaseCloudMusic.Wpf.Model
         {
             get => _description;
             set => Set(ref _description, value);
+        }
+
+        public string CreateTime
+        {
+            get => _createTime;
+            set => Set(ref _createTime, value);
         }
     }
 

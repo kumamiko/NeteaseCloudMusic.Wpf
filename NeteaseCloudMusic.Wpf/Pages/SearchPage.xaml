@@ -372,11 +372,11 @@
                                       SelectionMode="Single"
                                       Width="{Binding ElementName=tab, Path=ActualWidth}"
                                       SelectionChanged="StopSelectionChangedEventBubbling">
-                                <!--<i:Interaction.Triggers>
+                                <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseLeftButtonUp">
-                                        <cmd:EventToCommand Command="{Binding NavigateToAlbumCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView},Path=SelectedItem.No }"/>
+                                        <cmd:EventToCommand Command="{Binding NavigateToPlayListCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView},Path=SelectedItem.Id }"/>
                                     </i:EventTrigger>
-                                </i:Interaction.Triggers>-->
+                                </i:Interaction.Triggers>
                             </ListView>
                             <Button Grid.Row="1" 
                                     Style="{StaticResource ColorScaleButton}"

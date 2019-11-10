@@ -44,14 +44,14 @@ namespace NeteaseCloudMusic.Wpf
 
             Messenger.Default.Register<bool>(this, "Play", PlayMusic);
             Messenger.Default.Register<string>(this, "ShowInfo", ShowInfo);
-            Messenger.Default.Register<(Type, int)>(this, "Navigate", NavigateTo);
+            Messenger.Default.Register<(Type, long)>(this, "Navigate", NavigateTo);
             Messenger.Default.Register<bool>(this, "RepeatSingle", RepeatSingle);
 
             Unloaded += (_, __) =>
             {
                 Messenger.Default.Unregister<bool>(this, "Play", PlayMusic);
                 Messenger.Default.Unregister<string>(this, "ShowInfo", ShowInfo);
-                Messenger.Default.Unregister<(Type, int)>(this, "Navigate", NavigateTo);
+                Messenger.Default.Unregister<(Type, long)>(this, "Navigate", NavigateTo);
                 Messenger.Default.Unregister<bool>(this, "RepeatSingle", RepeatSingle);
             };
 
@@ -76,7 +76,7 @@ namespace NeteaseCloudMusic.Wpf
         /// 跳转到其他页面
         /// </summary>
         /// <param name="obj"></param>
-        private void NavigateTo((Type pageType, int id) obj)
+        private void NavigateTo((Type pageType, long id) obj)
         {
             if (ucNav.listviewNavigation.SelectedIndex != -1)
                 ucNav.listviewNavigation.SelectedIndex = -1;
@@ -88,20 +88,26 @@ namespace NeteaseCloudMusic.Wpf
             //跳入歌手页面
             if (obj.pageType == typeof(ArtistPage))
             {
-                var artistVM = new ArtistViewModel(obj.id);
+                var artistVM = new ArtistViewModel((int)obj.id);
                 page = Activator.CreateInstance(obj.pageType, artistVM) as ArtistPage;
             }
             //跳入专辑页面
             if (obj.pageType == typeof(AlbumPage))
             {
-                var albumVM = new AlbumViewModel(obj.id);
+                var albumVM = new AlbumViewModel((int)obj.id);
                 page = Activator.CreateInstance(obj.pageType, albumVM) as AlbumPage;
             }
             //跳入MV页面
             if (obj.pageType == typeof(MvPage))
             {
-                var mvVM = new MvViewModel(obj.id);
+                var mvVM = new MvViewModel((int)obj.id);
                 page = Activator.CreateInstance(obj.pageType, mvVM) as MvPage;
+            }
+            //跳入PlayList页面
+            if (obj.pageType == typeof(PlayListPage))
+            {
+                var playlistVM = new PlayListViewModel(obj.id);
+                page = Activator.CreateInstance(obj.pageType, playlistVM) as PlayListPage;
             }
 
             if (page != null)

@@ -32,7 +32,7 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
         private ObservableCollection<ArtistInfo> _artists = new ObservableCollection<ArtistInfo>();
         private ObservableCollection<AlbumInfo> _albums = new ObservableCollection<AlbumInfo>();
         private ObservableCollection<MvInfo> _mvs = new ObservableCollection<MvInfo>();
-        private ObservableCollection<Playlist> _playlists = new ObservableCollection<Playlist>();
+        private ObservableCollection<PlaylistInfo> _playlists = new ObservableCollection<PlaylistInfo>();
 
         #region 属性
         public string Keyword
@@ -77,7 +77,7 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
             set => Set(ref _mvs, value);
         }
 
-        public ObservableCollection<Playlist> Playlists
+        public ObservableCollection<PlaylistInfo> Playlists
         {
             get => _playlists;
             set => Set(ref _playlists, value);
@@ -122,6 +122,14 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
 
         public RelayCommand<string> NavigateToArtistCmd => new Lazy<RelayCommand<string>>(() =>
             new RelayCommand<string>(NavigateToArtist)).Value;
+
+        public RelayCommand<long> NavigateToPlayListCmd => new Lazy<RelayCommand<long>>(() =>
+            new RelayCommand<long>(NavigateToPlayList)).Value;
+
+        private void NavigateToPlayList(long id)
+        {
+            _mainVM?.NavigateTo(typeof(PlayListPage), id);
+        }
 
         public RelayCommand<object> AddToPlaylistCmd => new Lazy<RelayCommand<object>>(() =>
             new RelayCommand<object>(AddToPlaylist)).Value;

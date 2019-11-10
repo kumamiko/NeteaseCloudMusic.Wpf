@@ -25,6 +25,7 @@ namespace NeteaseCloudMusic.Wpf.Model
         #endregion
 
         #region 属性
+        public int Type { get; set; }
         public bool IsCompleted
         {
             get { return _isCompleted; }
@@ -86,7 +87,8 @@ namespace NeteaseCloudMusic.Wpf.Model
             {
                 FilePath = _filePath,
                 Url = _url,
-                No = _no
+                No = _no,
+                Type = Type
             };
             _downloadProgress.DownloadReport += GetReport;
             Task.Run(async () =>
@@ -122,6 +124,10 @@ namespace NeteaseCloudMusic.Wpf.Model
         public string FilePath { get; set; }
         public string Url { get; set; }
         public int No { get; set; }
+        /// <summary>
+        /// 0：歌曲， 1：MV
+        /// </summary>
+        public int Type { get; set; } = 0;
 
         public event Action<DownloadInfo> DownloadReport;
         public void Report(DownloadInfo value)

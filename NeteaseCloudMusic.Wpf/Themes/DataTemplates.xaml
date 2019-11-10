@@ -327,7 +327,7 @@
         </Grid>
     </DataTemplate>
     
-    <DataTemplate x:Key="SearchPlaylistTemplate" DataType="{x:Type model:Playlist}">
+    <DataTemplate x:Key="SearchPlaylistTemplate" DataType="{x:Type model:PlaylistInfo}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*" />

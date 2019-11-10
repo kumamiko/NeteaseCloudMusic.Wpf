@@ -158,9 +158,9 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
                 SaveFolder = dialog.SelectedPath;
         }
 
-        public void NavigateTo(Type pageType, int id)
+        public void NavigateTo(Type pageType, long id)
         {
-            MessengerInstance.Send<(Type, int)>((pageType, id), "Navigate");
+            MessengerInstance.Send<(Type, long)>((pageType, id), "Navigate");
         }
 
         /// <summary>
