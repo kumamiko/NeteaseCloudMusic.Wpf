@@ -391,7 +391,7 @@
                                     Command="{Binding SearchMoreCmd}"/>
                         </Grid>
                     </TabItem>
-                    <TabItem Header="主播电台">
+                    <TabItem Header="主播电台" Visibility="Collapsed">
                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                             <ContentControl Content="{StaticResource ViewBox.Blank}"/>
                             <TextBlock Text="没做╮(￣▽￣)╭" Foreground="#999"  HorizontalAlignment="Center"/>
