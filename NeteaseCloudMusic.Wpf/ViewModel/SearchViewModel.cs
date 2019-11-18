@@ -145,10 +145,13 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
                 if (ids.Contains(item.Id)) continue;
                 _mainVM.PlaylistMusics.Add(item);
             }
+
+            MessengerInstance.Send<string>("已加入播放列表", "ShowInfo");
         }
 
         private void NavigateToArtist(string id)
         {
+            if (string.IsNullOrEmpty(id)) return;
             _mainVM?.NavigateTo(typeof(ArtistPage), int.Parse(id));
         }
 
@@ -167,6 +170,9 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
         {
             _mainVM?.NavigateTo(typeof(MvPage), id);
         }
+
+        public RelayCommand NotYetCmd => new Lazy<RelayCommand>(() =>
+            new RelayCommand(() => { MessengerInstance.Send<string>("没做...", "ShowInfo"); })).Value;
         #endregion
 
 

@@ -12,13 +12,21 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
 {
     public class PlayListViewModel : ViewModelBase
     {
+        #region 字段
         private PlaylistInfo _playlist = new PlaylistInfo();
         private NeteaseCloudMusicService _NeteaseCloudMusicService;
         private MainViewModel _mainVM;
+        private SearchViewModel _searchVM;
 
         private ObservableCollection<MusicInfo> _musics = new ObservableCollection<MusicInfo>();
-
-
+        #endregion
+        
+        #region 属性
+        public SearchViewModel SearchVM
+        {
+            get => _searchVM;
+            set => Set(ref _searchVM, value);
+        }
         public PlaylistInfo Playlist
         {
             get => _playlist;
@@ -29,14 +37,8 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
         {
             get => _musics;
             set => Set(ref _musics, value);
-        }
-
-        public RelayCommand<object> ChangeSelectMusicCmd => new Lazy<RelayCommand<object>>(() =>
-            new RelayCommand<object>(ChangeSelectMusic)).Value;
-
-        public RelayCommand<object> AddToPlaylistCmd => new Lazy<RelayCommand<object>>(() =>
-            new RelayCommand<object>(AddToPlaylist)).Value;
-
+        } 
+        #endregion
 
         public PlayListViewModel()
         {
@@ -47,6 +49,7 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
         {
             _mainVM = SimpleIoc.Default.GetInstance<MainViewModel>();
             _NeteaseCloudMusicService = SimpleIoc.Default.GetInstance<NeteaseCloudMusicService>();
+            SearchVM = SimpleIoc.Default.GetInstance<SearchViewModel>();
 
             Task.Run(async () =>
             {
@@ -57,29 +60,6 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
                     playlistInfo_songs.Songs.ForEach(t => Musics.Add(t));
                 });
             });
-        }
-
-        private void ChangeSelectMusic(object selectedItem)
-        {
-            if (selectedItem is MusicInfo music)
-            {
-                if (_mainVM.SelectMusicInfo != null) _mainVM.SelectMusicInfo.Playing = false;
-                _mainVM.SelectMusicInfo = music;
-                _mainVM.SelectMusicInfo.Playing = true;
-                if (!_mainVM.PlaylistMusics.Any(t => t.Id == music.Id)) _mainVM.PlaylistMusics.Add(music);
-            }
-        }
-        private void AddToPlaylist(object selectItems)
-        {
-            var musics = (selectItems as ObservableCollection<object>).Cast<MusicInfo>().ToList();
-
-            var ids = _mainVM.PlaylistMusics.Select(t => t.Id);
-
-            foreach (var item in musics)
-            {
-                if (ids.Contains(item.Id)) continue;
-                _mainVM.PlaylistMusics.Add(item);
-            }
         }
     }
 }

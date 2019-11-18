@@ -73,7 +73,8 @@
                                     Padding="10 0" 
                                     Style="{StaticResource ScaleButton}"
                                     Background="{StaticResource ButtonBackground_Default_Brush}"
-                                    Margin="0 0 10 10">
+                                    Margin="0 0 10 10"
+                                    Command="{Binding SearchVM.NotYetCmd}">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="&#xE8F4;" FontFamily="{StaticResource SegoeAssets}" Foreground="{StaticResource TextForeground_Hover_Brush}" VerticalAlignment="Center"/>
                                     <TextBlock Text="收藏(0)" VerticalAlignment="Center" FontSize="12" 
@@ -84,6 +85,7 @@
                                     Padding="10 0" Background="{StaticResource ButtonBackground_Default_Brush}"
                                     Style="{StaticResource ScaleButton}"
                                     Margin="0 0 10 10"
+                                    Command="{Binding SearchVM.NotYetCmd}"
                                     >
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="&#xE8BD;" FontFamily="{StaticResource SegoeAssets}" Foreground="{StaticResource TextForeground_Hover_Brush}" VerticalAlignment="Center"/>
@@ -94,7 +96,8 @@
                             <Button Height="28" BorderThickness="1" BorderBrush="{StaticResource ButtonBorderBrush_Default_Brush}"
                                     Padding="10 0" Background="{StaticResource ButtonBackground_Default_Brush}"
                                     Style="{StaticResource ScaleButton}"
-                                    Margin="0 0 10 10">
+                                    Margin="0 0 10 10"
+                                    Command="{Binding SearchVM.NotYetCmd}">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="&#xE72D;" FontFamily="{StaticResource SegoeAssets}" Foreground="{StaticResource TextForeground_Hover_Brush}" VerticalAlignment="Center"/>
                                     <TextBlock Text="分享(0)" VerticalAlignment="Center" FontSize="12" 
@@ -104,7 +107,8 @@
                             <Button Height="28" BorderThickness="1" BorderBrush="{StaticResource ButtonBorderBrush_Default_Brush}"
                                     Padding="10 0" Background="{StaticResource ButtonBackground_Default_Brush}"
                                     Style="{StaticResource ScaleButton}"
-                                    Margin="0 0 10 10">
+                                    Margin="0 0 10 10"
+                                    Command="{Binding SearchVM.NotYetCmd}">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="&#xE896;" FontFamily="{StaticResource SegoeAssets}" Foreground="{StaticResource TextForeground_Hover_Brush}" VerticalAlignment="Center"/>
                                     <TextBlock Text="下载" VerticalAlignment="Center" FontSize="12" 
@@ -133,19 +137,22 @@
                       >
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseDoubleClick">
-                        <cmd:EventToCommand Command="{Binding ChangeSelectMusicCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView},Path=SelectedItem }"/>
+                        <cmd:EventToCommand Command="{Binding SearchVM.ChangeSelectMusicCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView},Path=SelectedItem }"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <ListView.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="添加到播放列表" Command="{Binding AddToPlaylistCmd}" 
+                        <MenuItem Header="添加到播放列表" Command="{Binding SearchVM.AddToPlaylistCmd}" 
                                   CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}},
                                   Path=PlacementTarget.SelectedItems}"/>
                         <Separator/>
-                        <MenuItem Header="收藏" />
-                        <MenuItem Header="下载"/>
-                        <MenuItem Header="评论"/>
-                        <MenuItem Header="分享"/>
+                        <MenuItem Header="收藏" Command="{Binding SearchVM.NotYetCmd}"/>
+                        <MenuItem Header="评论" Command="{Binding SearchVM.NotYetCmd}"/>
+                        <MenuItem Header="分享" Command="{Binding SearchVM.NotYetCmd}"/>
+                        <Separator/>
+                        <MenuItem Header="下载" Command="{Binding SearchVM.AddToDownloadCmd}" 
+                                               CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}},
+                                               Path=PlacementTarget.SelectedItems}"/>
                     </ContextMenu>
                 </ListView.ContextMenu>
             </ListView>

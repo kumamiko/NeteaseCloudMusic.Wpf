@@ -117,10 +117,9 @@
                                       CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}},
                                       Path=PlacementTarget.SelectedItems}"/>
                             <Separator/>
-                            <MenuItem Header="收藏" />
-                            <MenuItem Header="下载"/>
-                            <MenuItem Header="评论"/>
-                            <MenuItem Header="分享"/>
+                            <MenuItem Header="收藏" Command="{Binding SearchVM.NotYetCmd}"/>
+                            <MenuItem Header="评论" Command="{Binding SearchVM.NotYetCmd}"/>
+                            <MenuItem Header="分享" Command="{Binding SearchVM.NotYetCmd}"/>
                             <Separator/>
                             <MenuItem Command="{Binding SearchVM.NavigateToArtistCmd}" 
                                       CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}},
@@ -148,7 +147,7 @@
                                       CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}},
                                       Path=PlacementTarget.SelectedItem.MvId}"/>
                             <Separator/>
-                            <MenuItem Header="添加到列表" Command="{Binding SearchVM.AddToListCmd}" 
+                            <MenuItem Header="添加到本地音乐" Command="{Binding SearchVM.AddToListCmd}" 
                                                 CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}},
                                                 Path=PlacementTarget.SelectedItems}"/>
                             <MenuItem Header="下载" Command="{Binding SearchVM.AddToDownloadCmd}" 

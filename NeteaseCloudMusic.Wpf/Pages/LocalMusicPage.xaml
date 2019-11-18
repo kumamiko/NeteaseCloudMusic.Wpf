@@ -159,10 +159,9 @@
                                   CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}},
                                   Path=PlacementTarget.SelectedItems}"/>
                         <Separator/>
-                        <MenuItem Header="收藏" />
-                        <MenuItem Header="下载"/>
-                        <MenuItem Header="评论"/>
-                        <MenuItem Header="分享"/>
+                        <MenuItem Header="收藏" Command="{Binding NotYetCmd}"/>
+                        <MenuItem Header="评论" Command="{Binding NotYetCmd}"/>
+                        <MenuItem Header="分享" Command="{Binding NotYetCmd}"/>
                         <Separator/>
                         <MenuItem>
                             <MenuItem.Header>
