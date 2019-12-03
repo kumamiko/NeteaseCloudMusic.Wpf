@@ -146,7 +146,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="300" />
                 <ColumnDefinition Width="200" />
-                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <TextBlock Padding="25 0"
@@ -171,6 +171,16 @@
                         Background="Transparent"
                         Foreground="#666"
                         Command="{Binding DataContext.CancelCmd,RelativeSource={RelativeSource AncestorType=ListView}}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource Self},Path= DataContext }"/>
+                <!--打开-->
+                <Button Style="{StaticResource ScaleButton}"
+                        FontFamily="{StaticResource SegoeAssets}"
+                        Content="&#xED25;"
+                        ToolTip="打开"
+                        Margin="5 0"
+                        Background="Transparent"
+                        Foreground="#666"
+                        Command="{Binding DataContext.OpenCmd,RelativeSource={RelativeSource AncestorType=ListView}}"
                         CommandParameter="{Binding RelativeSource={RelativeSource Self},Path= DataContext }"/>
                 <Button Style="{StaticResource ScaleButton}"
                         FontFamily="{StaticResource SegoeAssets}"

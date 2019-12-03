@@ -108,7 +108,7 @@
                                     Command="{Binding NotYetCmd}">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="&#xE72D;" FontFamily="{StaticResource SegoeAssets}" Foreground="{StaticResource TextForeground_Hover_Brush}" VerticalAlignment="Center"/>
-                                    <TextBlock Text="分享(70)" VerticalAlignment="Center" FontSize="12" 
+                                    <TextBlock Text="分享" VerticalAlignment="Center" FontSize="12" 
                                            Foreground="Black" Margin="5 0 0 0"/>
                                 </StackPanel>
                             </Button>

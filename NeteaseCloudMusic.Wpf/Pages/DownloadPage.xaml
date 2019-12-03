@@ -81,10 +81,11 @@
                         </Grid.RowDefinitions>
                         <StackPanel Orientation="Horizontal">
                             <Button Style="{StaticResource ScaleButton}"
-                                                            Padding="0"
-                                                            Background="Transparent"
-                                                            Foreground="Black"
-                                                            Margin="15 0">
+                                    Padding="0"
+                                    Background="Transparent"
+                                    Foreground="Black"
+                                    Margin="15 0"
+                                    >
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock FontFamily="{StaticResource SegoeAssets}" Text="&#xE896;"
                                                    Margin="0 0 5 0" VerticalAlignment="Center"/>
@@ -94,10 +95,11 @@
                                 <Border BorderThickness="1 0 0 0" BorderBrush="{StaticResource BorderBrush_Default_Brush}"
                                                         Height="15"/>
                             <Button Style="{StaticResource ScaleButton}"
-                                                        Padding="0"
-                                                        Background="Transparent"
-                                                        Foreground="Black"
-                                                        Margin="15 0">
+                                    Padding="0"
+                                    Background="Transparent"
+                                    Foreground="Black"
+                                    Margin="15 0"
+                                    Command="{Binding ClearCmd}">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock FontFamily="{StaticResource SegoeAssets}" Text="&#xE74D;"
                                                Margin="0 0 5 0" VerticalAlignment="Center"/>

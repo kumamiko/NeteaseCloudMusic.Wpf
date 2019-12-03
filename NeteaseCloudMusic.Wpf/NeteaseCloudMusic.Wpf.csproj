@@ -129,6 +129,7 @@
     <Compile Include="Config\GlobalData.cs" />
     <Compile Include="Controls\AnimatedTab.cs" />
     <Compile Include="Controls\Attach\ColorSwitchElement.cs" />
+    <Compile Include="Converter\BooleanReverseConverter.cs" />
     <Compile Include="Converter\IntToCollapsedConverter.cs" />
     <Compile Include="Converter\NullImageConverter.cs" />
     <Compile Include="Converter\PlayCountToStringConverter.cs" />

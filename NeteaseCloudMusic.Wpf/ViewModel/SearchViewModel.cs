@@ -192,9 +192,9 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
 
             foreach (var music in musics)
             {
-                if (_mainVM.PlaylistMusics.Any(t => t.Id == music.Id)) continue;/*如果存在就不再添加*/
+                if (_localMusicVM.Musics.Any(t => t.Id == music.Id)) continue;/*如果存在就不再添加*/
 
-                _mainVM.PlaylistMusics.Add(music);
+                _localMusicVM.Musics.Add(music);
 
                 _dataservice.AddMusic(
                     new MusicInfo
@@ -210,7 +210,7 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
                         Type = music.Type
                     });
 
-                MessengerInstance.Send<string>("已加入肯德基豪华午餐", "ShowInfo");
+                MessengerInstance.Send<string>("已加入本地音乐列表", "ShowInfo");
             }
         }
 
@@ -282,7 +282,7 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
                     });
                     break;
                 case 4:
-                    if (_mvs.Count != 0) return;
+                    if (_playlists.Count != 0) return;
                     Task.Run(async () =>
                     {
                         var playlists = await _NeteaseCloudMusicservice.SearchPlayListAsync(Keyword);

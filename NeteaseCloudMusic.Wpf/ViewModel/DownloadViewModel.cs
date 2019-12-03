@@ -52,8 +52,19 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
         public RelayCommand<object> OpenCmd => new Lazy<RelayCommand<object>>(() =>
              new RelayCommand<object>(Open)).Value;
 
-        #endregion
+        public RelayCommand ClearCmd => new Lazy<RelayCommand>(() =>
+             new RelayCommand(() => {
+                 for (int i = 0; i < Downloads.Count; i++)
+                 {
+                     if (Downloads[i].IsCompleted)
+                     {
+                         Downloads.Remove(Downloads[i]);
+                     }
+                 }
+                 MessengerInstance.Send<string>("清除已完成", "ShowInfo");
+             })).Value;
 
+        #endregion
 
 
         public DownloadViewModel(DownloadService downloadService)
@@ -68,14 +79,7 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
                 if (!File.Exists(item.FilePath))
                     return;
 
-                try
-                {
-                    Process.Start("explorer", $"/select, \"{item.FilePath}\"");
-                }
-                catch (Exception ex)
-                {
-                    //Todo 写日志
-                }
+                Process.Start("Explorer", "/select,"+ $"{item.FilePath}");
             }
         }
 

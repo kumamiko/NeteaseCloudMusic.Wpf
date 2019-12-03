@@ -441,6 +441,7 @@
                         <Button Style="{StaticResource ScaleButton}"
                                 Background="Transparent"
                                 Grid.Column="2"
+                                IsEnabled="{Binding ElementName=pop,Path=IsOpen,Converter={StaticResource BooleanReverseConverter}}"
                                 PreviewMouseLeftButtonUp="btnList_PreviewMouseLeftButtonUp">
                             <Button.Triggers>
                                 <EventTrigger RoutedEvent="Button.Click">
@@ -495,7 +496,8 @@
                                                         Padding="0"
                                                         Background="Transparent"
                                                         Foreground="Black"
-                                                        Margin="15 0">
+                                                        Margin="15 0"
+                                                        >
                                                     <StackPanel Orientation="Horizontal">
                                                         <Button Style="{StaticResource ScaleButton}"
                                                                 Background="Transparent"
@@ -656,35 +658,6 @@
                     <TextBox Margin="25 0" Padding="5 8" BorderBrush="#c6c6c7" IsReadOnly="True"
                              Text="{Binding SaveFolder}"
                              Foreground="{StaticResource TextForeground_Light_Brush}"/>
-                    <!--<Grid>
-                        <TextBlock Text="本地音乐" VerticalAlignment="Center" Margin="20 20"
-                                       FontSize="12"/>
-                        <Button Width="44" 
-                                Style="{StaticResource ScaleButton}"
-                                FontFamily="{StaticResource SegoeAssets}"
-                                Content="&#xE109;"
-                                Foreground="#666"
-                                Background="Transparent"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                FontSize="15"
-                                Margin="10 0"
-                                />
-                    </Grid>
-                    <ItemsControl Margin="25 0" BorderThickness="1 1 1 0" BorderBrush="#c6c6c7">
-                        <Border BorderThickness="0 0 0 1" BorderBrush="{StaticResource Brush_Accent}">
-                            <TextBlock Text="本地音乐" VerticalAlignment="Center" Margin="20 10"
-                                       FontSize="12"/>
-                        </Border>
-                        <Border BorderThickness="0 0 0 1" BorderBrush="{StaticResource Brush_Accent}">
-                            <TextBlock Text="本地音乐" VerticalAlignment="Center" Margin="20 10"
-                                       FontSize="12"/>
-                        </Border>
-                        <Border BorderThickness="0 0 0 1" BorderBrush="{StaticResource Brush_Accent}">
-                            <TextBlock Text="本地音乐" VerticalAlignment="Center" Margin="20 10"
-                                       FontSize="12"/>
-                        </Border>
-                    </ItemsControl>-->
                     <Button BorderThickness="1"
                             Width="270"
                             Style="{StaticResource ColorScaleButton}"
@@ -722,7 +695,6 @@
                 <Border Opacity="0.3" Background="#1f1f1f"/>
                 <Grid VerticalAlignment="Top" HorizontalAlignment="Left" ClipToBounds="True"
                       Width="450" Height="450" >
-                    <!--<Image Source="../Resources/Image/mask.png" Width="330"/>-->
                     <Ellipse Width="320" Height="320">
                         <Ellipse.Fill>
                             <SolidColorBrush Color="White" Opacity="0.2"/>
