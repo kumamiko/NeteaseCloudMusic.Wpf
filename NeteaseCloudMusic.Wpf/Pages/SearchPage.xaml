@@ -151,7 +151,7 @@
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="40" />
                             </Grid.RowDefinitions>
-                            <ContentControl Content="{StaticResource ViewBox.Blank}"
+                            <ContentControl ContentTemplate="{StaticResource Viewbox.Blank.Template}"
                                             Visibility="{Binding Musics.Count, Converter={StaticResource IntToCollapsedConverter}}"/>
                             <ListView Grid.Row="0"
                                       Background="Transparent"
@@ -236,7 +236,7 @@
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="40" />
                             </Grid.RowDefinitions>
-                            <ContentControl Content="{StaticResource ViewBox.Blank}"
+                            <ContentControl ContentTemplate="{StaticResource Viewbox.Blank.Template}"
                                             Visibility="{Binding Artists.Count, Converter={StaticResource IntToCollapsedConverter}}"/>
                             <ListView Grid.Row="0"
                                       Background="Transparent"
@@ -277,7 +277,7 @@
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="40" />
                             </Grid.RowDefinitions>
-                            <ContentControl Content="{StaticResource ViewBox.Blank}"
+                            <ContentControl ContentTemplate="{StaticResource Viewbox.Blank.Template}"
                                             Visibility="{Binding Albums.Count, Converter={StaticResource IntToCollapsedConverter}}"/>
                             <ListView Grid.Row="0"
                                       Background="Transparent"
@@ -314,7 +314,7 @@
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="40" />
                             </Grid.RowDefinitions>
-                            <ContentControl Content="{StaticResource ViewBox.Blank}"
+                            <ContentControl ContentTemplate="{StaticResource Viewbox.Blank.Template}"
                                             Visibility="{Binding Mvs.Count, Converter={StaticResource IntToCollapsedConverter}}"/>
                             <ListView Grid.Row="0"
                                       Background="Transparent"
@@ -360,7 +360,7 @@
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="40" />
                             </Grid.RowDefinitions>
-                            <ContentControl Content="{StaticResource ViewBox.Blank}"
+                            <ContentControl ContentTemplate="{StaticResource Viewbox.Blank.Template}"
                                             Visibility="{Binding Playlists.Count, Converter={StaticResource IntToCollapsedConverter}}"/>
                             <ListView Grid.Row="0"
                                       Background="Transparent"
@@ -393,7 +393,7 @@
                     </TabItem>
                     <TabItem Header="主播电台" Visibility="Collapsed">
                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <ContentControl Content="{StaticResource ViewBox.Blank}"/>
+                            <ContentControl ContentTemplate="{StaticResource Viewbox.Blank.Template}"/>
                             <TextBlock Text="没做╮(￣▽￣)╭" Foreground="#999"  HorizontalAlignment="Center"/>
                         </StackPanel>
                     </TabItem>

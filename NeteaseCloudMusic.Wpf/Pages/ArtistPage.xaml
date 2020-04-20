@@ -179,36 +179,40 @@
                 </ListView>
             </TabItem>
             <TabItem Header="MV">
-                <ListView Grid.Row="0"
-                          Background="Transparent"
-                          BorderThickness="0" AlternationCount="2"
-                          ItemTemplate="{StaticResource SearchMvTemplate}"
-                          ItemContainerStyle="{StaticResource ListViewMvItem}"
-                          ItemsSource="{Binding Mvs}"
-                          SelectionMode="Single"
-                          Width="{Binding ElementName=tab, Path=ActualWidth}"
-                          SelectionChanged="StopSelectionChangedEventBubbling">
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel IsItemsHost="True"/>
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseLeftButtonUp">
-                            <cmd:EventToCommand Command="{Binding NavigateToMvCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView},Path=SelectedItem.Id }"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </ListView>
+                <Grid>
+                    <ContentControl ContentTemplate="{StaticResource Viewbox.Blank.Template}"
+                                    Visibility="{Binding Mvs.Count, Converter={StaticResource IntToCollapsedConverter}}"/>
+                    <ListView Grid.Row="0"
+                              Background="Transparent"
+                              BorderThickness="0" AlternationCount="2"
+                              ItemTemplate="{StaticResource SearchMvTemplate}"
+                              ItemContainerStyle="{StaticResource ListViewMvItem}"
+                              ItemsSource="{Binding Mvs}"
+                              SelectionMode="Single"
+                              Width="{Binding ElementName=tab, Path=ActualWidth}"
+                              SelectionChanged="StopSelectionChangedEventBubbling">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel IsItemsHost="True"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                <cmd:EventToCommand Command="{Binding NavigateToMvCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView},Path=SelectedItem.Id }"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ListView>
+                </Grid>
             </TabItem>
             <TabItem Header="歌手详情">
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <ContentControl Content="{StaticResource ViewBox.Blank}"/>
+                    <ContentControl ContentTemplate="{StaticResource Viewbox.Blank.Template}"/>
                     <TextBlock Text="没做╮(￣▽￣)╭" Foreground="#999"  HorizontalAlignment="Center"/>
                 </StackPanel>
             </TabItem>
             <TabItem Header="相似歌手">
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <ContentControl Content="{StaticResource ViewBox.Blank}"/>
+                    <ContentControl ContentTemplate="{StaticResource Viewbox.Blank.Template}"/>
                     <TextBlock Text="没做╮(￣▽￣)╭" Foreground="#999"  HorizontalAlignment="Center"/>
                 </StackPanel>
             </TabItem>

@@ -33,7 +33,7 @@
                     </TextBlock>
                 </TabItem.Header>
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <ContentControl Content="{StaticResource ViewBox.Blank}"/>
+                        <ContentControl ContentTemplate="{StaticResource Viewbox.Blank.Template}"/>
                         <TextBlock Text="没做╮(￣▽￣)╭" Foreground="#999"  HorizontalAlignment="Center"/>
                 </StackPanel>
             </TabItem>
@@ -45,7 +45,7 @@
                     </TextBlock>
                 </TabItem.Header>
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <ContentControl Content="{StaticResource ViewBox.Blank}"/>
+                        <ContentControl ContentTemplate="{StaticResource Viewbox.Blank.Template}"/>
                         <TextBlock Text="没做╮(￣▽￣)╭" Foreground="#999"  HorizontalAlignment="Center"/>
                 </StackPanel>
             </TabItem>
@@ -57,7 +57,7 @@
                     </TextBlock>
                 </TabItem.Header>
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <ContentControl Content="{StaticResource ViewBox.Blank}"/>
+                        <ContentControl ContentTemplate="{StaticResource Viewbox.Blank.Template}"/>
                         <TextBlock Text="没做╮(￣▽￣)╭" Foreground="#999"  HorizontalAlignment="Center"/>
                 </StackPanel>
             </TabItem>
