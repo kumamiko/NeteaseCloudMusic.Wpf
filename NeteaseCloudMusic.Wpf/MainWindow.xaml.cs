@@ -404,5 +404,10 @@ namespace NeteaseCloudMusic.Wpf
         {
             PauseOrResume(null, null);
         }
+
+        private void OpenClosePlayingList(object sender, RoutedEventArgs e)
+        {
+            borderPlayingList.Visibility = borderPlayingList.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+        }
     }
 }

@@ -120,23 +120,27 @@
     <DataTemplate x:Key="SimpleMusicTemplate" DataType="{x:Type model:MusicInfo}">
         <Grid>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20" />
                 <ColumnDefinition Width="3*" />
                 <ColumnDefinition Width="1.5*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+            <Path Data="M0 0 L0 10 L5 5z" Fill="#bc2f2d" VerticalAlignment="Center" HorizontalAlignment="Right"
+                  Visibility="{Binding Playing,Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <TextBlock Padding="25 0"
+                       Grid.Column="1"
                        Text="{Binding Name}"
                        ToolTip="{Binding Name}"
                        TextTrimming="CharacterEllipsis"
                        HorizontalAlignment="Left" FontSize="13"
                        Foreground="{Binding Path=Playing,Converter={StaticResource PlayingToBrushConverter}}"/>
-            <TextBlock Grid.Column="1" 
+            <TextBlock Grid.Column="2" 
                        Text="{Binding Artist}" 
                        ToolTip="{Binding Artist}" 
                        TextTrimming="CharacterEllipsis"
                        HorizontalAlignment="Left" FontSize="12"
                        Foreground="{StaticResource TextForeground_Light_Brush}"/>
-            <TextBlock Grid.Column="2" Margin="0 0 20 0" Text="{Binding Duration}" HorizontalAlignment="Center" FontSize="12"
+            <TextBlock Grid.Column="3" Margin="0 0 20 0" Text="{Binding Duration}" HorizontalAlignment="Center" FontSize="12"
                        Foreground="{StaticResource TextForeground_Light_Brush}"/>
         </Grid>
     </DataTemplate>

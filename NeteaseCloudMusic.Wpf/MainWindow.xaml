@@ -51,7 +51,7 @@
         <BitmapImage x:Key="Image_Pause" UriSource="Resources/Image/pause.png" DecodePixelWidth="20"/>
         <BitmapImage x:Key="Image_Prev" UriSource="Resources/Image/prev.png" DecodePixelWidth="20"/>
         <BitmapImage x:Key="Image_Next" UriSource="Resources/Image/next.png" DecodePixelWidth="20"/>
-        
+
         <Storyboard x:Key="SB_IN">
             <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.3"/>
             <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0 200 0 0" To="0" Duration="0:0:0.3"
@@ -219,19 +219,6 @@
                     <SineEase/>
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
-        </Storyboard>
-
-        <Storyboard x:Key="OpenPlayingList">
-            <BooleanAnimationUsingKeyFrames Storyboard.TargetName="pop"
-                                            Storyboard.TargetProperty="IsOpen">
-                <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True"/>
-            </BooleanAnimationUsingKeyFrames>
-        </Storyboard>
-        <Storyboard x:Key="ClosePlayingList">
-            <BooleanAnimationUsingKeyFrames Storyboard.TargetName="pop"
-                                            Storyboard.TargetProperty="IsOpen">
-                <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False"/>
-            </BooleanAnimationUsingKeyFrames>
         </Storyboard>
 
     </Window.Resources>
@@ -441,13 +428,8 @@
                         <Button Style="{StaticResource ScaleButton}"
                                 Background="Transparent"
                                 Grid.Column="2"
-                                IsEnabled="{Binding ElementName=pop,Path=IsOpen,Converter={StaticResource BooleanReverseConverter}}"
+                                Click="OpenClosePlayingList"
                                 PreviewMouseLeftButtonUp="btnList_PreviewMouseLeftButtonUp">
-                            <Button.Triggers>
-                                <EventTrigger RoutedEvent="Button.Click">
-                                    <BeginStoryboard Storyboard="{StaticResource OpenPlayingList}"/>
-                                </EventTrigger>
-                            </Button.Triggers>
                             <TextBlock Width="44" 
                                 FontFamily="{StaticResource SegoeAssets}"
                                 Text="&#xE90B;"
@@ -470,111 +452,13 @@
                                            FontSize="9"/>
                         </Border>
                     </StackPanel>
-                    <!--popup 当前播放列表-->
-                    <Grid Grid.Column="0"
-                          FlowDirection="RightToLeft"
-                          Grid.ColumnSpan="4"
-                          Margin="1 0 0 0">
-                        <Popup IsOpen="False"
-                               StaysOpen="False" 
-                               AllowsTransparency="True" 
-                               x:Name="pop">
-                            <Border Height="485" Width="500" Background="White"
-                                    BorderThickness="1" BorderBrush="#dddde1"
-                                    Margin="0 20 20 0" Effect="{StaticResource Shadow1}">
-                                <Grid FlowDirection="LeftToRight">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="42" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <Border BorderBrush="#dddde1" BorderThickness="0 0 0 1">
-                                        <Grid VerticalAlignment="Center"
-                                              >
-                                            <TextBlock Text="播放列表" Margin="30 0" VerticalAlignment="Center"/>
-                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                <Button Style="{StaticResource ScaleButton}"
-                                                        Padding="0"
-                                                        Background="Transparent"
-                                                        Foreground="Black"
-                                                        Margin="15 0"
-                                                        >
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <Button Style="{StaticResource ScaleButton}"
-                                                                Background="Transparent"
-                                                                Margin="5 0">
-                                                            <Viewbox Width="16" Height="16">
-                                                                <Path Data="{StaticResource Icon.Add}" Fill="#999" VerticalAlignment="Center"/>
-                                                            </Viewbox>
-                                                        </Button>
-                                                        <TextBlock Text="收藏全部" VerticalAlignment="Center"/>
-                                                    </StackPanel>
-                                                </Button>
-                                                <Border BorderThickness="1 0 0 0" BorderBrush="{StaticResource BorderBrush_Default_Brush}"
-                                                        Height="15"/>
-                                                <Button Style="{StaticResource ScaleButton}"
-                                                        Padding="0"
-                                                        Background="Transparent"
-                                                        Foreground="Black"
-                                                        Margin="15 0"
-                                                        Command="{Binding ClearPlaylistMusicsCmd}">
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <TextBlock FontFamily="{StaticResource SegoeAssets}"
-                                                                   Text="&#xE74D;" VerticalAlignment="Center"
-                                                                   FontSize="15" Foreground="#999" Margin="5 0"/>
-                                                        <TextBlock Text="清空" VerticalAlignment="Center"/>
-                                                    </StackPanel>
-                                                </Button>
-                                                <Button Style="{StaticResource ScaleButton}"
-                                                        Padding="0"
-                                                        Background="Transparent"
-                                                        Foreground="Black"
-                                                        Margin="20 0">
-                                                    <Button.Triggers>
-                                                        <EventTrigger RoutedEvent="Button.Click">
-                                                            <BeginStoryboard Storyboard="{StaticResource ClosePlayingList}"/>
-                                                        </EventTrigger>
-                                                    </Button.Triggers>
-                                                    <TextBlock FontFamily="{StaticResource SegoeAssets}"
-                                                               Text="&#xE106;" VerticalAlignment="Center"
-                                                               FontSize="12" Foreground="#666"/>
-                                                </Button>
-                                            </StackPanel>
-                                        </Grid>
-                                    </Border>
-                                    <ListView Grid.Row="1"
-                                              Margin="-1"
-                                              BorderThickness="0" Background="Transparent" AlternationCount="2"
-                                              ItemTemplate="{StaticResource SimpleMusicTemplate}"
-                                              ItemContainerStyle="{StaticResource ListViewMusicItem}"
-                                              ItemsSource="{Binding PlaylistMusics}"
-                                              dd:DragDrop.IsDragSource="True"
-                                              dd:DragDrop.IsDropTarget="True"
-                                              dd:DragDrop.DropHandler="{Binding}"
-                                              x:Name="musicListView">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="MouseDoubleClick">
-                                                <cmd:EventToCommand Command="{Binding ChangeSelectMusicCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView},Path=SelectedItem }"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                        <ListView.ContextMenu>
-                                            <ContextMenu>
-                                                <MenuItem Header="从列表中删除" Command="{Binding RemoveFromListCmd}" 
-                                                          CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}},
-                                                          Path=PlacementTarget.SelectedItems}"/>
-                                            </ContextMenu>
-                                        </ListView.ContextMenu>
-                                    </ListView>
-                                </Grid>
-                            </Border>
-                        </Popup>
-                    </Grid>
                     <Popup PlacementTarget="{Binding ElementName=lblVolume}"
                            AllowsTransparency="True"
                            StaysOpen="False"
                            Grid.Column="0"
                            Grid.ColumnSpan="4"
                            Placement="Top"
-                           HorizontalOffset="-200"
+                           HorizontalOffset="50"
                            VerticalOffset="-20"
                            x:Name="popVolume">
                         <Border>
@@ -611,6 +495,98 @@
                             </StackPanel>
                         </Border>
                     </Popup>
+                </Grid>
+            </Border>
+        </Grid>
+        <!--当前播放列表-->
+        <Grid Grid.Row="1"
+              ClipToBounds="True"
+              Panel.ZIndex="1">
+            <Border Height="485" Width="500" Background="White"
+                    BorderThickness="1" BorderBrush="#dddde1"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Right"
+                    Visibility="Collapsed"
+                    x:Name="borderPlayingList"
+                    Margin="20 20 0 -1" Effect="{StaticResource Shadow1}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="42" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Border BorderBrush="#dddde1" BorderThickness="0 0 0 1">
+                        <Grid VerticalAlignment="Center"
+                                    >
+                            <TextBlock Text="播放列表" Margin="30 0" VerticalAlignment="Center"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Style="{StaticResource ScaleButton}"
+                                            Padding="0"
+                                            Background="Transparent"
+                                            Foreground="Black"
+                                            Margin="15 0"
+                                            >
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Style="{StaticResource ScaleButton}"
+                                                    Background="Transparent"
+                                                    Margin="5 0">
+                                            <Viewbox Width="16" Height="16">
+                                                <Path Data="{StaticResource Icon.Add}" Fill="#999" VerticalAlignment="Center"/>
+                                            </Viewbox>
+                                        </Button>
+                                        <TextBlock Text="收藏全部" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                                <Border BorderThickness="1 0 0 0" BorderBrush="{StaticResource BorderBrush_Default_Brush}"
+                                            Height="15"/>
+                                <Button Style="{StaticResource ScaleButton}"
+                                            Padding="0"
+                                            Background="Transparent"
+                                            Foreground="Black"
+                                            Margin="15 0"
+                                            Command="{Binding ClearPlaylistMusicsCmd}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock FontFamily="{StaticResource SegoeAssets}"
+                                                        Text="&#xE74D;" VerticalAlignment="Center"
+                                                        FontSize="15" Foreground="#999" Margin="5 0"/>
+                                        <TextBlock Text="清空" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Style="{StaticResource ScaleButton}"
+                                        Padding="0"
+                                        Background="Transparent"
+                                        Foreground="Black"
+                                        Margin="20 0"
+                                        Click="OpenClosePlayingList">
+                                    <TextBlock FontFamily="{StaticResource SegoeAssets}"
+                                                    Text="&#xE106;" VerticalAlignment="Center"
+                                                    FontSize="12" Foreground="#666"/>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <ListView Grid.Row="1"
+                                Margin="-1"
+                                BorderThickness="0" Background="Transparent" AlternationCount="2"
+                                ItemTemplate="{StaticResource SimpleMusicTemplate}"
+                                ItemContainerStyle="{StaticResource ListViewMusicItem}"
+                                ItemsSource="{Binding PlaylistMusics}"
+                                dd:DragDrop.IsDragSource="True"
+                                dd:DragDrop.IsDropTarget="True"
+                                dd:DragDrop.DropHandler="{Binding}"
+                                x:Name="musicListView">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <cmd:EventToCommand Command="{Binding ChangeSelectMusicCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView},Path=SelectedItem }"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <ListView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="从列表中删除" Command="{Binding RemoveFromListCmd}" 
+                                                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}},
+                                                Path=PlacementTarget.SelectedItems}"/>
+                            </ContextMenu>
+                        </ListView.ContextMenu>
+                    </ListView>
                 </Grid>
             </Border>
         </Grid>
@@ -724,6 +700,7 @@
                     </Image>
                 </Grid>
                 <Button Content="转针" x:Name="btnNeedle"
+                        Visibility="Collapsed"
                         Height="30" Width="60" Click="BtnNeedle_Click"/>
             </Grid>
         </Grid>

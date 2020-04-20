@@ -354,11 +354,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Resource Include="Themes\Fonts\SegMDL2.ttf" />
-    <Resource Include="Themes\Fonts\segoeui.ttf" />
-    <Resource Include="Themes\Fonts\segoeuib.ttf" />
-    <Resource Include="Themes\Fonts\segoeuil.ttf" />
-    <Resource Include="Themes\Fonts\segoeuisl.ttf" />
-    <Resource Include="Themes\Fonts\seguisb.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
