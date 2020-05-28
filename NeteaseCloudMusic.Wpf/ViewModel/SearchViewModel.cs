@@ -253,7 +253,7 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
                     if (_musics.Count != 0) return;
                     Task.Run(async () =>
                     {
-                        var musics = await _NeteaseCloudMusicservice.SearchMusicAsync(Keyword);
+                        var musics = await _NeteaseCloudMusicservice.SearchMusicAsync2(Keyword);
                         GalaSoft.MvvmLight.Threading.DispatcherHelper.CheckBeginInvokeOnUI(() => musics.ForEach(t => Musics.Add(t)));
                     });
                     break;
@@ -370,7 +370,7 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
                 case 0:
                     Task.Run(async () =>
                     {
-                        var musics = await _NeteaseCloudMusicservice.SearchMusicAsync(Keyword, _musics.Count);
+                        var musics = await _NeteaseCloudMusicservice.SearchMusicAsync2(Keyword, _musics.Count);
                         GalaSoft.MvvmLight.Threading.DispatcherHelper.CheckBeginInvokeOnUI(() => musics.ForEach(t => Musics.Add(t)));
                     });
                     break;

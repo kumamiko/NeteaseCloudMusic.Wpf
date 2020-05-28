@@ -61,9 +61,11 @@ namespace NeteaseCloudMusic.Wpf.Services
                             Id = t.id,
                             Name = t.name,
                             Artist = string.Join("/", t.artists.ToList().Select(p => p.name)),
+                            ArtistIds = t.artists[0].id.ToString(),
                             Duration = $"{duration.TotalMinutes:00}:{duration.Seconds:00}",
                             File = @"http://music.163.com/song/media/outer/url?id=" + t.id + ".mp3",
                             Album = t.album.name,
+                            AlbumId = t.album.id,
                             MvId = t.mvid,
                             Type = 1/*网页音乐*/
                         }); ;
