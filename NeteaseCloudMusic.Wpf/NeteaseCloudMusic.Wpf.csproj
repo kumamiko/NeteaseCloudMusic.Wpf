@@ -68,6 +68,10 @@
     <Reference Include="LiteDB, Version=4.1.4.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
       <HintPath>..\packages\LiteDB.4.1.4\lib\net40\LiteDB.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
     <Reference Include="NeteaseCloudMusicApi, Version=3.22.0.0, Culture=neutral, PublicKeyToken=d8a449f5f3ef6d09, processorArchitecture=MSIL">
       <HintPath>..\packages\NeteaseCloudMusicApi.3.22.0\lib\netstandard2.0\NeteaseCloudMusicApi.dll</HintPath>
     </Reference>
@@ -134,6 +138,7 @@
     <Compile Include="Converter\NullImageConverter.cs" />
     <Compile Include="Converter\PlayCountToStringConverter.cs" />
     <Compile Include="Converter\PlayModeToStreamGeometryConverter.cs" />
+    <Compile Include="Converter\ScrollViewerVerticalOffsetBottomConverter.cs" />
     <Compile Include="Converter\StringToArtistTransConverter.cs" />
     <Compile Include="Converter\IntToVisibilityConverter.cs" />
     <Compile Include="Converter\BooleanToVisibilityConverter.cs" />
@@ -390,6 +395,9 @@
     <Resource Include="Resources\Image\pause.png" />
     <Resource Include="Resources\Image\next.png" />
     <Resource Include="Resources\Image\prev.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Libraries\Microsoft.Expression.Interactions.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.6.0.0\build\Fody.targets" Condition="Exists('..\packages\Fody.6.0.0\build\Fody.targets')" />
