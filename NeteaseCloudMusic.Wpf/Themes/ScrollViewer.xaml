@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    >
+                    xmlns:ctl="clr-namespace:NeteaseCloudMusic.Wpf.Controls">
     
     <Color x:Key="Color_Accent">#c8c9cc</Color>
     <SolidColorBrush x:Key="Brush_Accent" Color="{StaticResource Color_Accent}"/>
@@ -216,4 +216,6 @@
     </Style>
 
     <Style BasedOn="{StaticResource ScrollViewerBaseStyle}" TargetType="ScrollViewer"/>
+    
+    <Style BasedOn="{StaticResource ScrollViewerBaseStyle}" TargetType="ctl:WheelSpeedScrollViewer"/>
 </ResourceDictionary>

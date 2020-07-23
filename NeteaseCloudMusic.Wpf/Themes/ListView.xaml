@@ -3,6 +3,7 @@
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                     xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
                     xmlns:local="clr-namespace:NeteaseCloudMusic.Wpf.Themes"
+                    xmlns:ctl="clr-namespace:NeteaseCloudMusic.Wpf.Controls"
                     xmlns:converter="clr-namespace:NeteaseCloudMusic.Wpf.Converter">
 
     <ResourceDictionary.MergedDictionaries>
@@ -248,18 +249,19 @@
                 <ControlTemplate TargetType="{x:Type ListView}">
                     <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="1" SnapsToDevicePixels="true">
                         <Grid>
-                            <ScrollViewer Focusable="false" Padding="{TemplateBinding Padding}" x:Name="sv">
+                            <ctl:WheelSpeedScrollViewer Focusable="false" Padding="{TemplateBinding Padding}" x:Name="sv"
+                                                        SpeedFactor="1.5">
                                 <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                 Width="{TemplateBinding Width}">
                                     <i:Interaction.Behaviors>
-                                        <ei:FluidMoveBehavior Duration="0:0:0.4">
+                                        <ei:FluidMoveBehavior Duration="0:0:0.3">
                                             <ei:FluidMoveBehavior.EaseY>
                                                 <CircleEase EasingMode="EaseOut"/>
                                             </ei:FluidMoveBehavior.EaseY>
                                         </ei:FluidMoveBehavior>
                                     </i:Interaction.Behaviors>
                                 </ItemsPresenter>
-                            </ScrollViewer>
+                            </ctl:WheelSpeedScrollViewer>
                             <!--<Border Height="30" VerticalAlignment="Top" 
                                     x:Name="borderTop"
                                     IsHitTestVisible="False">
