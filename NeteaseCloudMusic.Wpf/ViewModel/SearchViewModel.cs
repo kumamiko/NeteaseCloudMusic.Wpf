@@ -33,6 +33,7 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
         private ObservableCollection<AlbumInfo> _albums = new ObservableCollection<AlbumInfo>();
         private ObservableCollection<MvInfo> _mvs = new ObservableCollection<MvInfo>();
         private ObservableCollection<PlaylistInfo> _playlists = new ObservableCollection<PlaylistInfo>();
+        private ObservableCollection<Radio> _radios = new ObservableCollection<Radio>();
 
         #region 属性
         public string Keyword
@@ -81,6 +82,12 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
         {
             get => _playlists;
             set => Set(ref _playlists, value);
+        }
+
+        public ObservableCollection<Radio> Radios
+        {
+            get => _radios;
+            set => Set(ref _radios, value);
         }
         #endregion
 
@@ -169,6 +176,14 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
         private void NavigateToMv(int id)
         {
             _mainVM?.NavigateTo(typeof(MvPage), id);
+        }
+
+        public RelayCommand<long> NavigateToRadioCmd => new Lazy<RelayCommand<long>>(() =>
+            new RelayCommand<long>(NavigateToRadio)).Value;
+
+        private void NavigateToRadio(long id)
+        {
+            _mainVM?.NavigateTo(typeof(RadioPage), id);
         }
 
         public RelayCommand NotYetCmd => new Lazy<RelayCommand>(() =>
@@ -289,6 +304,14 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
                         GalaSoft.MvvmLight.Threading.DispatcherHelper.CheckBeginInvokeOnUI(() => playlists.ForEach(t => Playlists.Add(t)));
                     });
                     break;
+                case 5:
+                    if (_radios.Count != 0) return;
+                    Task.Run(async () =>
+                    {
+                        var radios = await _NeteaseCloudMusicservice.SearchRadioAsync(Keyword);
+                        GalaSoft.MvvmLight.Threading.DispatcherHelper.CheckBeginInvokeOnUI(() => radios.ForEach(t => Radios.Add(t)));
+                    });
+                    break;
             }
         }
 
@@ -319,6 +342,7 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
             Albums.Clear();
             Mvs.Clear();
             Playlists.Clear();
+            Radios.Clear();
 
             //Todo: 搜索
             switch (_searchTabIndex)
@@ -356,6 +380,13 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
                     {
                         var playlists = await _NeteaseCloudMusicservice.SearchPlayListAsync(Keyword);
                         GalaSoft.MvvmLight.Threading.DispatcherHelper.CheckBeginInvokeOnUI(() => playlists.ForEach(t => Playlists.Add(t)));
+                    });
+                    break;
+                case 5:
+                    Task.Run(async () =>
+                    {
+                        var radios = await _NeteaseCloudMusicservice.SearchRadioAsync(Keyword);
+                        GalaSoft.MvvmLight.Threading.DispatcherHelper.CheckBeginInvokeOnUI(() => radios.ForEach(t => Radios.Add(t)));
                     });
                     break;
             }
@@ -400,6 +431,13 @@ namespace NeteaseCloudMusic.Wpf.ViewModel
                     {
                         var playlists = await _NeteaseCloudMusicservice.SearchPlayListAsync(Keyword, _playlists.Count);
                         GalaSoft.MvvmLight.Threading.DispatcherHelper.CheckBeginInvokeOnUI(() => playlists.ForEach(t => Playlists.Add(t)));
+                    });
+                    break;
+                case 5:
+                    Task.Run(async () =>
+                    {
+                        var radios = await _NeteaseCloudMusicservice.SearchRadioAsync(Keyword, _radios.Count);
+                        GalaSoft.MvvmLight.Threading.DispatcherHelper.CheckBeginInvokeOnUI(() => radios.ForEach(t => Radios.Add(t)));
                     });
                     break;
             }

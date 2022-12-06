@@ -179,6 +179,9 @@
     <Compile Include="Pages\MvPage.xaml.cs">
       <DependentUpon>MvPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\RadioPage.xaml.cs">
+      <DependentUpon>RadioPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\PlayListPage.xaml.cs">
       <DependentUpon>PlayListPage.xaml</DependentUpon>
     </Compile>
@@ -206,6 +209,7 @@
     <Compile Include="UserControls\UCTitleBar.xaml.cs">
       <DependentUpon>UCTitleBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\RadioViewModel.cs" />
     <Compile Include="ViewModel\PlayListViewModel.cs" />
     <Compile Include="ViewModel\AlbumViewModel.cs" />
     <Compile Include="ViewModel\DownloadViewModel.cs" />
@@ -246,6 +250,10 @@
     <Page Include="Pages\MvPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\RadioPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\PlayListPage.xaml">
       <SubType>Designer</SubType>

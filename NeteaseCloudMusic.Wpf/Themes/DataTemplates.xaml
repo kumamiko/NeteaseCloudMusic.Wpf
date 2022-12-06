@@ -371,6 +371,60 @@
         </Grid>
     </DataTemplate>
 
+    <DataTemplate x:Key="RadioMusicTemplate" DataType="{x:Type model:MusicInfo}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="150" />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60" />
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Column="0"
+                    Padding="20,0,0,0"
+                    FontSize="12"
+                    Foreground="{Binding Path=Playing, Converter={StaticResource PlayingToBrushConverter}}"
+                    Text="{Binding SerialNum, StringFormat={}{0:D2}}" />
+                <Path
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Data="{StaticResource Icon.Spectrum}"
+                    Fill="{StaticResource PathFill_Default_Brush}"
+                    Visibility="{Binding Playing, Converter={StaticResource PlayingToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                <TextBlock
+                    Grid.Column="2"
+                    HorizontalAlignment="Left"
+                    FontSize="13"
+                    Foreground="{Binding Path=Playing, Converter={StaticResource PlayingToBrushConverter}}"
+                    Text="{Binding Name}"
+                    TextTrimming="CharacterEllipsis"
+                    ToolTip="{Binding Name}" />
+            </Grid>
+            <TextBlock
+                Grid.Column="1"
+                HorizontalAlignment="Left"
+                FontSize="12"
+                Foreground="{StaticResource TextForeground_Light_Brush}"
+                Text="{Binding ListenerCount, StringFormat=播放 {0}}"
+                TextTrimming="CharacterEllipsis"
+                ToolTip="{Binding ListenerCount}" />
+            <TextBlock
+                Grid.Column="2"
+                Margin="20,0,0,0"
+                HorizontalAlignment="Left"
+                FontSize="12"
+                Foreground="{StaticResource TextForeground_Light_Brush}"
+                Text="{Binding CreateTime}"
+                TextTrimming="CharacterEllipsis"
+                ToolTip="{Binding CreateTime}" />
+        </Grid>
+    </DataTemplate>
+
     <DataTemplate x:Key="SearchArtistTemplate" DataType="{x:Type model:ArtistInfo}">
         <Grid>
             <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
@@ -608,6 +662,67 @@
                 Foreground="#999"
                 Text="{Binding ArtistName}" />
         </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="SearchRadioTemplate" DataType="{x:Type model:Radio}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="10,0,0,0" Orientation="Horizontal">
+                    <Border BorderBrush="#dddde1" BorderThickness="1">
+                        <Image
+                            Width="44"
+                            Height="44"
+                            RenderOptions.BitmapScalingMode="LowQuality"
+                            Stretch="Fill">
+                            <Image.Source>
+                                <BitmapImage DecodePixelWidth="50" UriSource="{Binding Cover, Converter={StaticResource StringToUriConverter}}" />
+                            </Image.Source>
+                        </Image>
+                    </Border>
+                </StackPanel>
+                <TextBlock
+                    Grid.Column="1"
+                    Margin="10,0,30,0"
+                    VerticalAlignment="Center"
+                    FontSize="13"
+                    Foreground="#333"
+                    Text="{Binding Name}"
+                    TextTrimming="CharacterEllipsis"
+                    ToolTip="{Binding Name}" />
+            </Grid>
+            <TextBlock
+                Grid.Column="1"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                FontSize="12"
+                Foreground="#999"
+                Text="{Binding ProgramCount, StringFormat={}{0} 期}" />
+            <TextBlock
+                Grid.Column="2"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                FontSize="12"
+                Foreground="#999"
+                Text="{Binding Nickname, StringFormat=by  {0}}"
+                TextTrimming="CharacterEllipsis" />
+            <TextBlock
+                Grid.Column="3"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                FontSize="12"
+                Foreground="#999"
+                Text="{Binding PlayCount, StringFormat=播放:{0}}" />
+        </Grid>
     </DataTemplate>
 
     <!--  Viewbox Icon DataTemplate  -->

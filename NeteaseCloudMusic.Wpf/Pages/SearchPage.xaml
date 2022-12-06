@@ -432,14 +432,52 @@
                                 Visibility="{Binding Playlists.Count, Converter={StaticResource IntToVisibilityConverter}}" />
                         </Grid>
                     </TabItem>
-                    <TabItem Header="主播电台" Visibility="Collapsed">
-                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <ContentControl ContentTemplate="{StaticResource Viewbox.Blank.Template}" />
-                            <TextBlock
+                    <TabItem Header="主播电台">
+                        <Grid>
+                            <Grid.Resources>
+                                <Style
+                                    x:Key="ListViewMusicItem"
+                                    BasedOn="{StaticResource ListViewMusicItem}"
+                                    TargetType="ListViewItem">
+                                    <Setter Property="Height" Value="68" />
+                                </Style>
+                            </Grid.Resources>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="40" />
+                            </Grid.RowDefinitions>
+                            <ContentControl ContentTemplate="{StaticResource Viewbox.Blank.Template}" Visibility="{Binding Playlists.Count, Converter={StaticResource IntToCollapsedConverter}}" />
+                            <ListView
+                                Grid.Row="0"
+                                Width="{Binding ElementName=tab, Path=ActualWidth}"
+                                AlternationCount="2"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                ItemContainerStyle="{StaticResource ListViewMusicItem}"
+                                ItemTemplate="{StaticResource SearchRadioTemplate}"
+                                ItemsSource="{Binding Radios}"
+                                SelectionChanged="StopSelectionChangedEventBubbling"
+                                SelectionMode="Single">
+                                <b:Interaction.Triggers>
+                                    <b:EventTrigger EventName="MouseLeftButtonUp">
+                                        <b:InvokeCommandAction Command="{Binding NavigateToRadioCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItem.Id}" />
+                                    </b:EventTrigger>
+                                </b:Interaction.Triggers>
+                            </ListView>
+                            <Button
+                                Grid.Row="1"
+                                Height="32"
+                                Padding="30,0"
                                 HorizontalAlignment="Center"
-                                Foreground="#999"
-                                Text="没做╮(￣▽￣)╭" />
-                        </StackPanel>
+                                Background="Transparent"
+                                BorderBrush="#c62e2e"
+                                BorderThickness="1"
+                                Command="{Binding SearchMoreCmd}"
+                                Content="继续加载"
+                                Foreground="#c62e2e"
+                                Style="{StaticResource ColorScaleButton}"
+                                Visibility="{Binding Playlists.Count, Converter={StaticResource IntToVisibilityConverter}}" />
+                        </Grid>
                     </TabItem>
                 </controls:AnimatedTab>
             </Border>

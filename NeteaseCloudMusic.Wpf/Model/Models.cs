@@ -57,6 +57,9 @@ namespace NeteaseCloudMusic.Wpf.Model
         private string _artistIds;
         private int _albumId;
         private int _mvId;
+        private int _serialNum;
+        private int _listenerCount;
+        private string _createTime;
 
         [BsonId]
         public Guid Guid { get; set; }
@@ -124,6 +127,24 @@ namespace NeteaseCloudMusic.Wpf.Model
         {
             get => _playing;
             set => Set(ref _playing, value);
+        }
+
+        public int SerialNum
+        {
+            get => _serialNum;
+            set => Set(ref _serialNum, value);
+        }
+
+        public int ListenerCount
+        {
+            get => _listenerCount;
+            set => Set(ref _listenerCount, value);
+        }
+
+        public string CreateTime
+        {
+            get => _createTime;
+            set => Set(ref _createTime, value);
         }
     }
 
@@ -338,6 +359,68 @@ namespace NeteaseCloudMusic.Wpf.Model
         {
             get => _userId;
             set => Set(ref _userId, value);
+        }
+
+        public string Description
+        {
+            get => _description;
+            set => Set(ref _description, value);
+        }
+
+        public string CreateTime
+        {
+            get => _createTime;
+            set => Set(ref _createTime, value);
+        }
+    }
+
+    public class Radio : ObservableObject
+    {
+        private long _id;
+        private string _cover;
+        private string _name;
+        private string _nickname;
+        private int _playCount;
+        private int _programCount;
+        private int _bookCount;
+        private int _userId;
+        private string _description;
+        private string _createTime;
+
+        public long Id
+        {
+            get => _id;
+            set => Set(ref _id, value);
+        }
+
+        public string Cover
+        {
+            get => _cover;
+            set => Set(ref _cover, value);
+        }
+
+        public string Name
+        {
+            get => _name;
+            set => Set(ref _name, value);
+        }
+
+        public string Nickname
+        {
+            get => _nickname;
+            set => Set(ref _nickname, value);
+        }
+
+        public int PlayCount
+        {
+            get => _playCount;
+            set => Set(ref _playCount, value);
+        }
+
+        public int ProgramCount
+        {
+            get => _programCount;
+            set => Set(ref _programCount, value);
         }
 
         public string Description

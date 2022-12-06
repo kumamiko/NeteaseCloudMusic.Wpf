@@ -109,6 +109,12 @@ namespace NeteaseCloudMusic.Wpf
                 var playlistVM = new PlayListViewModel(obj.id);
                 page = Activator.CreateInstance(obj.pageType, playlistVM) as PlayListPage;
             }
+            //跳入Radio页面
+            if (obj.pageType == typeof(RadioPage))
+            {
+                var radioVM = new RadioViewModel(obj.id);
+                page = Activator.CreateInstance(obj.pageType, radioVM) as RadioPage;
+            }
 
             if (page != null)
             {

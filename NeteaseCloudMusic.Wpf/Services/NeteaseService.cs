@@ -16,6 +16,8 @@ namespace NeteaseCloudMusic.Wpf.Services
 {
     public class NeteaseCloudMusicService
     {
+        Lazy<CloudMusicApi> api = new Lazy<CloudMusicApi>(() => new CloudMusicApi());
+
 
         /// <summary>
         /// 网易搜索Api
@@ -84,12 +86,11 @@ namespace NeteaseCloudMusic.Wpf.Services
         public async Task<List<MusicInfo>> SearchMusicAsync2(string keyword, int offset = 0)
         {
             List<MusicInfo> songs = new List<MusicInfo>();
-            CloudMusicApi api = new CloudMusicApi();
             try
             {
                 bool isOk;
                 JObject json;
-                (isOk, json) = await api.RequestAsync(CloudMusicApiProviders.Search, new Dictionary<string, object> { ["keywords"] = keyword.ToString(), ["offset"] = offset.ToString() });
+                (isOk, json) = await api.Value.RequestAsync(CloudMusicApiProviders.Search, new Dictionary<string, object> { ["keywords"] = keyword.ToString(), ["offset"] = offset.ToString() });
                 if (!isOk)
                     throw new ApplicationException($"获取专辑信息失败： {json}");
 
@@ -296,6 +297,41 @@ namespace NeteaseCloudMusic.Wpf.Services
             return playlists;
         }
 
+        /// <summary>
+        /// 搜radio
+        /// </summary>
+        /// <param name="keyword"></param>
+        /// <param name="offset"></param>
+        /// <returns></returns>
+        public async Task<List<Radio>> SearchRadioAsync(string keyword, int offset = 0)
+        {
+            List<Radio> radios = new List<Radio>();
+
+            try
+            {
+                (bool isOK, JObject json) = await api.Value.RequestAsync(CloudMusicApiProviders.Search, new Dictionary<string, object> { ["keywords"] = keyword, ["type"] = 1009, ["offset"] = offset });
+                if (!isOK)
+                    throw new ApplicationException($"获取主播广播信息失败： {json}");
+
+                foreach (var t in json["result"]["djRadios"].ToArray())
+                {
+                    radios.Add(new Radio
+                    {
+                        Id = (long)t["id"],
+                        Name = t["name"].ToString(),
+                        Cover = t["picUrl"].ToString(),
+                        Nickname = t["dj"]["nickname"].ToString(),
+                        PlayCount = (int)t["playCount"],
+                        ProgramCount = (int)t["programCount"]
+                    });
+                }
+                return radios;
+            }
+            catch { }
+
+            return radios;
+        }
+
 
         /// <summary>
         /// 搜某个歌手的专辑
@@ -341,12 +377,11 @@ namespace NeteaseCloudMusic.Wpf.Services
         public async Task<List<MvInfo>> GetArtistMvAsync(int artistNo, int offset = 0)
         {
             List<MvInfo> mvs = new List<MvInfo>();
-            CloudMusicApi api = new CloudMusicApi();
             try
             {
                 bool isOk;
                 JObject json;
-                (isOk, json) = await api.RequestAsync(CloudMusicApiProviders.ArtistMv, new Dictionary<string, object> { ["id"] = artistNo.ToString() });
+                (isOk, json) = await api.Value.RequestAsync(CloudMusicApiProviders.ArtistMv, new Dictionary<string, object> { ["id"] = artistNo.ToString() });
                 if (!isOk)
                     throw new ApplicationException($"获取歌手mv信息失败： {json}");
 
@@ -427,12 +462,11 @@ namespace NeteaseCloudMusic.Wpf.Services
         {
             AlbumInfo albumInfo = new AlbumInfo();
             List<MusicInfo> songs = new List<MusicInfo>();
-            CloudMusicApi api = new CloudMusicApi();
             try
             {
                 bool isOk;
                 JObject json;
-                (isOk, json) = await api.RequestAsync(CloudMusicApiProviders.Album, new Dictionary<string, object> { ["id"] = albumId.ToString() });
+                (isOk, json) = await api.Value.RequestAsync(CloudMusicApiProviders.Album, new Dictionary<string, object> { ["id"] = albumId.ToString() });
                 if (!isOk)
                     throw new ApplicationException($"获取专辑信息失败： {json}");
 
@@ -475,12 +509,11 @@ namespace NeteaseCloudMusic.Wpf.Services
         public async Task<MvInfo> GetMvAsync(int mvNo)
         {
             MvInfo mvInfo = new MvInfo();
-            CloudMusicApi api = new CloudMusicApi();
             try
             {
                 bool isOk;
                 JObject json;
-                (isOk, json) = await api.RequestAsync(CloudMusicApiProviders.MvDetail, new Dictionary<string, object> { ["mvid"] = mvNo.ToString() });
+                (isOk, json) = await api.Value.RequestAsync(CloudMusicApiProviders.MvDetail, new Dictionary<string, object> { ["mvid"] = mvNo.ToString() });
                 if (!isOk)
                     throw new ApplicationException($"获取mv详细信息失败： {json}");
 
@@ -544,16 +577,15 @@ namespace NeteaseCloudMusic.Wpf.Services
         {
             PlaylistInfo playlistInfo = new PlaylistInfo();
             List<MusicInfo> songs = new List<MusicInfo>();
-            CloudMusicApi api = new CloudMusicApi();
             try
             {
                 bool isOk;
                 JObject json;
-                (isOk, json) = await api.RequestAsync(CloudMusicApiProviders.PlaylistDetail, new Dictionary<string, object> { ["id"] = playlistId.ToString() });
+                (isOk, json) = await api.Value.RequestAsync(CloudMusicApiProviders.PlaylistDetail, new Dictionary<string, object> { ["id"] = playlistId.ToString() });
                 if (!isOk)
                     throw new ApplicationException($"获取专辑信息失败： {json}");
 
-                var a = json.ToString();
+                //var a = json.ToString();
 
                 var playlistInfoTemp = json["playlist"];
 
@@ -567,7 +599,7 @@ namespace NeteaseCloudMusic.Wpf.Services
 
                 int[] trackIds = json["playlist"]["trackIds"].Select(t => (int)t["id"]).ToArray();
 
-                (isOk, json) = await api.RequestAsync(CloudMusicApiProviders.SongDetail, new Dictionary<string, object> { ["ids"] = trackIds });
+                (isOk, json) = await api.Value.RequestAsync(CloudMusicApiProviders.SongDetail, new Dictionary<string, object> { ["ids"] = trackIds });
 
                 if (!isOk)
                     throw new ApplicationException($"获取歌曲详情失败： {json}");
@@ -594,5 +626,68 @@ namespace NeteaseCloudMusic.Wpf.Services
 
             return (playlistInfo, songs);
         }
+
+        public async Task<(Radio Radio, List<MusicInfo> Songs)> GetRadioAndSongs(long radioId, int offset = 0)
+        {
+            Radio radio = new Radio();
+            List<MusicInfo> songs = new List<MusicInfo>();
+            try
+            {
+                bool isOk;
+                JObject json;
+
+                if (offset == 0)
+                {
+                    (isOk, json) = await api.Value.RequestAsync(CloudMusicApiProviders.DjDetail, new Dictionary<string, object> { ["rid"] = radioId.ToString() });
+                    if (!isOk)
+                        throw new ApplicationException($"获取广播信息失败： {json}");
+
+                    //var a = json.ToString();
+
+                    var radioTemp = json["djRadio"];
+
+                    radio.Id = (long)radioTemp["id"];
+                    radio.Name = radioTemp["name"].ToString();
+                    radio.Cover = radioTemp["picUrl"].ToString();
+                    radio.Nickname = radioTemp["dj"]["nickname"].ToString();
+                    radio.PlayCount = (int)radioTemp["playCount"];
+                    radio.Description = radioTemp["desc"].ToString();
+                    radio.CreateTime = DateTimeHelper.ConvertTimeStampToDateTime((long)radioTemp["createTime"]).ToString("yyyy-MM-dd");
+                }
+
+                (isOk, json) = await api.Value.RequestAsync(CloudMusicApiProviders.DjProgram, new Dictionary<string, object> { ["rid"] = radioId, ["offset"] = offset });
+
+                if (!isOk)
+                    throw new ApplicationException($"获取节目失败： {json}");
+
+
+                var a = json.ToString();
+                foreach (JObject t in json["programs"])
+                {
+                    var s = t["mainSong"];
+                    var artistsTemp = s["artists"].Select(p => (string)p["name"]).ToArray();
+
+                    songs.Add(
+                        new MusicInfo
+                        {
+                            Id = (int)(s["id"]),
+                            ArtistIds = s["artists"].Select(p => ((int)p["id"]).ToString()).First(),
+                            Name = s["name"]?.ToString() ?? string.Empty,
+                            Album = s["album"]["name"]?.ToString() ?? string.Empty,
+                            Artist = string.Join("/", artistsTemp),
+                            ListenerCount = (int)t["listenerCount"],
+                            SerialNum = (int)t["serialNum"],
+                            CreateTime = DateTimeHelper.ConvertTimeStampToDateTime((long)t["createTime"]).ToString("yyyy-MM-dd"),
+                            File = @"http://music.163.com/song/media/outer/url?id=" + s["id"] + ".mp3",
+                            Type = 1/*网页音乐*/
+                        });
+                }
+                Console.WriteLine();
+            }
+            catch { }
+
+            return (radio, songs);
+        }
+
     }
 }
