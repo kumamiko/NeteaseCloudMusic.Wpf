@@ -26,10 +26,9 @@ namespace NeteaseCloudMusic.Wpf.Services
         /// <returns></returns>
         public async Task<string> SearchAsync(string keyword, int offset = 0, int type = 1)
         {
-            var response = await $"http://music.163.com/api/search/get".WithTimeout(3)
-                                    .PostUrlEncodedAsync(new { s = keyword, offset = offset, limit = 20, type = type });
-
-            return await response.Content?.ReadAsStringAsync() ?? string.Empty;
+            return await $"http://music.163.com/api/search/get".WithTimeout(3)
+                                    .PostUrlEncodedAsync(new { s = keyword, offset = offset, limit = 20, type = type })
+                                    .ReceiveString();
         }
 
         /// <summary>
@@ -85,48 +84,46 @@ namespace NeteaseCloudMusic.Wpf.Services
         public async Task<List<MusicInfo>> SearchMusicAsync2(string keyword, int offset = 0)
         {
             List<MusicInfo> songs = new List<MusicInfo>();
-            using (CloudMusicApi api = new CloudMusicApi())
+            CloudMusicApi api = new CloudMusicApi();
+            try
             {
-                try
+                bool isOk;
+                JObject json;
+                (isOk, json) = await api.RequestAsync(CloudMusicApiProviders.Search, new Dictionary<string, object> { ["keywords"] = keyword.ToString(), ["offset"] = offset.ToString() });
+                if (!isOk)
+                    throw new ApplicationException($"获取专辑信息失败： {json}");
+
+                //var a = json.ToString();
+
+                var songsTemp = json["result"]["songs"].ToArray();
+
+                songs = new List<MusicInfo>();
+                foreach (var t in songsTemp)
                 {
-                    bool isOk;
-                    JObject json;
-                    (isOk, json) = await api.RequestAsync(CloudMusicApiProviders.Search, new Dictionary<string, string> { { "keywords", keyword.ToString() }, { "offset", offset.ToString() } });
-                    if (!isOk)
-                        throw new ApplicationException($"获取专辑信息失败： {json}");
+                    //var b = t.ToString();
 
-                    //var a = json.ToString();
+                    var artistsTemp = t["artists"].Select(p => (string)p["name"]).ToArray();
+                    var artistsIdsTemp = t["artists"].Select(p => ((int)p["id"]).ToString()).ToArray();
+                    var duration = TimeSpan.FromMilliseconds((int)t["duration"]);
 
-                    var songsTemp = json["result"]["songs"].ToArray();
-
-                    songs = new List<MusicInfo>();
-                    foreach (var t in songsTemp)
-                    {
-                        //var b = t.ToString();
-
-                        var artistsTemp = t["artists"].Select(p => (string)p["name"]).ToArray();
-                        var artistsIdsTemp = t["artists"].Select(p => ((int)p["id"]).ToString()).ToArray();
-                        var duration = TimeSpan.FromMilliseconds((int)t["duration"]);
-
-                        songs.Add(
-                            new MusicInfo
-                            {
-                                Id = (int)t["id"],
-                                Name = t["name"].ToString(),
-                                Album = t["album"]?["name"].ToString(),
-                                AlbumId = (int)t["album"]["id"],
-                                Artist = string.Join("/", artistsTemp),
-                                ArtistIds = artistsIdsTemp[0],/*先做成只能搜索单个歌手*/
-                                Duration = $"{duration.TotalMinutes:00}:{duration.Seconds:00}",
-                                File = @"http://music.163.com/song/media/outer/url?id=" + t["id"].ToString() + ".mp3",
-                                MvId = (int)t["mvid"],
-                                Type = 1/*网页音乐*/
-                            });
-                    }
-                    Console.WriteLine();
+                    songs.Add(
+                        new MusicInfo
+                        {
+                            Id = (int)t["id"],
+                            Name = t["name"].ToString(),
+                            Album = t["album"]?["name"].ToString(),
+                            AlbumId = (int)t["album"]["id"],
+                            Artist = string.Join("/", artistsTemp),
+                            ArtistIds = artistsIdsTemp[0],/*先做成只能搜索单个歌手*/
+                            Duration = $"{duration.TotalMinutes:00}:{duration.Seconds:00}",
+                            File = @"http://music.163.com/song/media/outer/url?id=" + t["id"].ToString() + ".mp3",
+                            MvId = (int)t["mvid"],
+                            Type = 1/*网页音乐*/
+                        });
                 }
-                catch { }
+                Console.WriteLine();
             }
+            catch { }
 
             return songs;
         }
@@ -166,6 +163,7 @@ namespace NeteaseCloudMusic.Wpf.Services
                         {
                             Id = t.id,
                             Name = t.name,
+                            TrackCount = t.size,
                             PicUrl = t.picUrl != null ? t.picUrl : "pack://application:,,,/Resources/Image/default_album.png",
                             Artist = t.artists != null ? string.Join("/", artists) : t.artist.name
                         }); ;
@@ -343,36 +341,34 @@ namespace NeteaseCloudMusic.Wpf.Services
         public async Task<List<MvInfo>> GetArtistMvAsync(int artistNo, int offset = 0)
         {
             List<MvInfo> mvs = new List<MvInfo>();
-            using (CloudMusicApi api = new CloudMusicApi())
+            CloudMusicApi api = new CloudMusicApi();
+            try
             {
-                try
+                bool isOk;
+                JObject json;
+                (isOk, json) = await api.RequestAsync(CloudMusicApiProviders.ArtistMv, new Dictionary<string, object> { ["id"] = artistNo.ToString() });
+                if (!isOk)
+                    throw new ApplicationException($"获取歌手mv信息失败： {json}");
+
+                var mvsTemp = json["mvs"].ToArray();
+
+                foreach (var t in mvsTemp)
                 {
-                    bool isOk;
-                    JObject json;
-                    (isOk, json) = await api.RequestAsync(CloudMusicApiProviders.ArtistMv, new Dictionary<string, string> { { "id", artistNo.ToString() } });
-                    if (!isOk)
-                        throw new ApplicationException($"获取歌手mv信息失败： {json}");
+                    var duration = TimeSpan.FromMilliseconds((int)t["duration"]);
 
-                    var mvsTemp = json["mvs"].ToArray();
-
-                    foreach (var t in mvsTemp)
-                    {
-                        var duration = TimeSpan.FromMilliseconds((int)t["duration"]);
-
-                        mvs.Add(
-                            new MvInfo
-                            {
-                                Id = (int)t["id"],
-                                Name = t["name"].ToString(),
-                                Cover = t["imgurl"].ToString(),
-                                PlayCount = (int)t["playCount"],
-                                ArtistName = t["artistName"].ToString(),
-                                Duration = $"{duration.TotalMinutes:00}:{duration.Seconds:00}"
-                            });
-                    }
+                    mvs.Add(
+                        new MvInfo
+                        {
+                            Id = (int)t["id"],
+                            Name = t["name"].ToString(),
+                            Cover = t["imgurl"].ToString(),
+                            PlayCount = (int)t["playCount"],
+                            ArtistName = t["artistName"].ToString(),
+                            Duration = $"{duration.TotalMinutes:00}:{duration.Seconds:00}"
+                        });
                 }
-                catch { }
             }
+            catch { }
 
             return mvs;
         }
@@ -431,49 +427,47 @@ namespace NeteaseCloudMusic.Wpf.Services
         {
             AlbumInfo albumInfo = new AlbumInfo();
             List<MusicInfo> songs = new List<MusicInfo>();
-            using (CloudMusicApi api = new CloudMusicApi())
+            CloudMusicApi api = new CloudMusicApi();
+            try
             {
-                try
+                bool isOk;
+                JObject json;
+                (isOk, json) = await api.RequestAsync(CloudMusicApiProviders.Album, new Dictionary<string, object> { ["id"] = albumId.ToString() });
+                if (!isOk)
+                    throw new ApplicationException($"获取专辑信息失败： {json}");
+
+                //var a = json.ToString();
+
+                var albumInfoTemp = json["album"];
+                var artists = albumInfoTemp["artists"].Select(t => (string)t["name"]).ToArray();
+
+                albumInfo.Id = (int)albumInfoTemp["id"];
+                albumInfo.Name = albumInfoTemp["name"].ToString();
+                albumInfo.Artist = string.Join("/", artists);
+                albumInfo.PicUrl = albumInfoTemp["picUrl"].ToString();
+                albumInfo.PublishTime = DateTimeHelper.ConvertTimeStampToDateTime((long)albumInfoTemp["publishTime"]).ToString("yyyy-MM-dd");
+
+                var songsTemp = json["songs"].ToArray();
+
+                foreach (var t in songsTemp)
                 {
-                    bool isOk;
-                    JObject json;
-                    (isOk, json) = await api.RequestAsync(CloudMusicApiProviders.Album, new Dictionary<string, string> { { "id", albumId.ToString() } });
-                    if (!isOk)
-                        throw new ApplicationException($"获取专辑信息失败： {json}");
+                    var artistsTemp = t["ar"].Select(p => (string)p["name"]).ToArray();
 
-                    //var a = json.ToString();
-
-                    var albumInfoTemp = json["album"];
-                    var artists = albumInfoTemp["artists"].Select(t => (string)t["name"]).ToArray();
-
-                    albumInfo.Id = (int)albumInfoTemp["id"];
-                    albumInfo.Name = albumInfoTemp["name"].ToString();
-                    albumInfo.Artist = string.Join("/", artists);
-                    albumInfo.PicUrl = albumInfoTemp["picUrl"].ToString();
-                    albumInfo.PublishTime = DateTimeHelper.ConvertTimeStampToDateTime((long)albumInfoTemp["publishTime"]).ToString("yyyy-MM-dd");
-
-                    var songsTemp = json["songs"].ToArray();
-
-                    foreach (var t in songsTemp)
-                    {
-                        var artistsTemp = t["ar"].Select(p => (string)p["name"]).ToArray();
-
-                        songs.Add(
-                            new MusicInfo
-                            {
-                                Id = (int)t["id"],
-                                ArtistIds = t["ar"].Select(p => ((int)p["id"]).ToString()).First(),
-                                Name = t["name"]?.ToString() ?? string.Empty,
-                                Album = t["al"]["name"]?.ToString() ?? string.Empty,
-                                Artist = string.Join("/", artistsTemp),
-                                File = @"http://music.163.com/song/media/outer/url?id=" + t["id"] + ".mp3",
-                                Type = 1/*网页音乐*/
-                            });
-                    }
-                    Console.WriteLine();
+                    songs.Add(
+                        new MusicInfo
+                        {
+                            Id = (int)t["id"],
+                            ArtistIds = t["ar"].Select(p => ((int)p["id"]).ToString()).First(),
+                            Name = t["name"]?.ToString() ?? string.Empty,
+                            Album = t["al"]["name"]?.ToString() ?? string.Empty,
+                            Artist = string.Join("/", artistsTemp),
+                            File = @"http://music.163.com/song/media/outer/url?id=" + t["id"] + ".mp3",
+                            Type = 1/*网页音乐*/
+                        });
                 }
-                catch { }
+                Console.WriteLine();
             }
+            catch { }
 
             return (albumInfo, songs);
         }
@@ -481,39 +475,37 @@ namespace NeteaseCloudMusic.Wpf.Services
         public async Task<MvInfo> GetMvAsync(int mvNo)
         {
             MvInfo mvInfo = new MvInfo();
-            using (CloudMusicApi api = new CloudMusicApi())
+            CloudMusicApi api = new CloudMusicApi();
+            try
             {
-                try
+                bool isOk;
+                JObject json;
+                (isOk, json) = await api.RequestAsync(CloudMusicApiProviders.MvDetail, new Dictionary<string, object> { ["mvid"] = mvNo.ToString() });
+                if (!isOk)
+                    throw new ApplicationException($"获取mv详细信息失败： {json}");
+
+                string[] resolutions = { "240", "480", "720", "1080" };
+
+                int i = 3;
+                while (i-- > 0)
                 {
-                    bool isOk;
-                    JObject json;
-                    (isOk, json) = await api.RequestAsync(CloudMusicApiProviders.MvDetail, new Dictionary<string, string> { { "mvid", mvNo.ToString() } });
-                    if (!isOk)
-                        throw new ApplicationException($"获取mv详细信息失败： {json}");
-
-                    string[] resolutions = { "240", "480", "720", "1080" };
-
-                    int i = 3;
-                    while (i-- > 0)
+                    if (json["data"]["brs"][resolutions[i]] != null)
                     {
-                        if (json["data"]["brs"][resolutions[i]] != null)
-                        {
-                            mvInfo.Url = json["data"]["brs"][resolutions[i]].ToString();
-                            break;
-                        }
+                        mvInfo.Url = json["data"]["brs"][resolutions[i]].ToString();
+                        break;
                     }
-
-                    var a = json.ToString();
-
-                    var duration = TimeSpan.FromMilliseconds((int)json["data"]["duration"]);
-                    mvInfo.Name = json["data"]["name"].ToString();
-                    mvInfo.Id = (int)json["data"]["id"];
-                    mvInfo.Duration = $"{duration.TotalMinutes:00}:{duration.Seconds:00}";
-                    mvInfo.ArtistName = json["data"]["artistName"].ToString();
-                    mvInfo.PlayCount = (int)json["data"]["playCount"];
                 }
-                catch (Exception ex) { }
+
+                var a = json.ToString();
+
+                var duration = TimeSpan.FromMilliseconds((int)json["data"]["duration"]);
+                mvInfo.Name = json["data"]["name"].ToString();
+                mvInfo.Id = (int)json["data"]["id"];
+                mvInfo.Duration = $"{duration.TotalMinutes:00}:{duration.Seconds:00}";
+                mvInfo.ArtistName = json["data"]["artistName"].ToString();
+                mvInfo.PlayCount = (int)json["data"]["playCount"];
             }
+            catch { }
 
             return mvInfo;
         }
@@ -523,9 +515,7 @@ namespace NeteaseCloudMusic.Wpf.Services
             try
             {
                 //type搜索的类型：1歌曲 10专辑 100歌手 1000歌单 1002用户 1006歌词 1009主播电台 
-                var response = await $"http://music.163.com/api/song/detail/?id={id}&ids=%5B{id}%5D".WithTimeout(3).GetAsync();
-
-                var jsonstring = await response?.Content?.ReadAsStringAsync();
+                var jsonstring = await $"http://music.163.com/api/song/detail/?id={id}&ids=%5B{id}%5D".WithTimeout(3).GetStringAsync();
 
                 var root = JsonConvert.DeserializeObject<SearchSongDetail.SongDetail>(jsonstring ?? string.Empty);
 
@@ -554,50 +544,53 @@ namespace NeteaseCloudMusic.Wpf.Services
         {
             PlaylistInfo playlistInfo = new PlaylistInfo();
             List<MusicInfo> songs = new List<MusicInfo>();
-            using (CloudMusicApi api = new CloudMusicApi())
+            CloudMusicApi api = new CloudMusicApi();
+            try
             {
-                try
+                bool isOk;
+                JObject json;
+                (isOk, json) = await api.RequestAsync(CloudMusicApiProviders.PlaylistDetail, new Dictionary<string, object> { ["id"] = playlistId.ToString() });
+                if (!isOk)
+                    throw new ApplicationException($"获取专辑信息失败： {json}");
+
+                var a = json.ToString();
+
+                var playlistInfoTemp = json["playlist"];
+
+                playlistInfo.Id = (long)playlistInfoTemp["id"];
+                playlistInfo.Name = playlistInfoTemp["name"].ToString();
+                playlistInfo.Cover = playlistInfoTemp["coverImgUrl"].ToString();
+                playlistInfo.Nickname = playlistInfoTemp["creator"]["nickname"].ToString();
+                playlistInfo.PlayCount = (int)playlistInfoTemp["playCount"];
+                playlistInfo.Description = playlistInfoTemp["description"].ToString();
+                playlistInfo.CreateTime = DateTimeHelper.ConvertTimeStampToDateTime((long)playlistInfoTemp["createTime"]).ToString("yyyy-MM-dd");
+
+                int[] trackIds = json["playlist"]["trackIds"].Select(t => (int)t["id"]).ToArray();
+
+                (isOk, json) = await api.RequestAsync(CloudMusicApiProviders.SongDetail, new Dictionary<string, object> { ["ids"] = trackIds });
+
+                if (!isOk)
+                    throw new ApplicationException($"获取歌曲详情失败： {json}");
+
+                foreach (JObject t in json["songs"])
                 {
-                    bool isOk;
-                    JObject json;
-                    (isOk, json) = await api.RequestAsync(CloudMusicApiProviders.PlaylistDetail, new Dictionary<string, string> { { "id", playlistId.ToString() } });
-                    if (!isOk)
-                        throw new ApplicationException($"获取专辑信息失败： {json}");
+                    var artistsTemp = t["ar"].Select(p => (string)p["name"]).ToArray();
 
-                    //var a = json.ToString();
-
-                    var playlistInfoTemp = json["playlist"];
-
-                    playlistInfo.Id = (long)playlistInfoTemp["id"];
-                    playlistInfo.Name = playlistInfoTemp["name"].ToString();
-                    playlistInfo.Cover = playlistInfoTemp["coverImgUrl"].ToString();
-                    playlistInfo.Nickname = playlistInfoTemp["creator"]["nickname"].ToString();
-                    playlistInfo.PlayCount = (int)playlistInfoTemp["playCount"];
-                    playlistInfo.Description = playlistInfoTemp["description"].ToString();
-                    playlistInfo.CreateTime = DateTimeHelper.ConvertTimeStampToDateTime((long)playlistInfoTemp["createTime"]).ToString("yyyy-MM-dd");
-
-                    var songsTemp = playlistInfoTemp["tracks"].ToArray();
-
-                    foreach (var t in songsTemp)
-                    {
-                        var artistsTemp = t["ar"].Select(p => (string)p["name"]).ToArray();
-
-                        songs.Add(
-                            new MusicInfo
-                            {
-                                Id = (int)t["id"],
-                                ArtistIds = t["ar"].Select(p => ((int)p["id"]).ToString()).First(),
-                                Name = t["name"]?.ToString() ?? string.Empty,
-                                Album = t["al"]["name"]?.ToString() ?? string.Empty,
-                                Artist = string.Join("/", artistsTemp),
-                                File = @"http://music.163.com/song/media/outer/url?id=" + t["id"] + ".mp3",
-                                Type = 1/*网页音乐*/
-                            });
-                    }
-                    Console.WriteLine();
+                    songs.Add(
+                        new MusicInfo
+                        {
+                            Id = (int)t["id"],
+                            ArtistIds = t["ar"].Select(p => ((int)p["id"]).ToString()).First(),
+                            Name = t["name"]?.ToString() ?? string.Empty,
+                            Album = t["al"]["name"]?.ToString() ?? string.Empty,
+                            Artist = string.Join("/", artistsTemp),
+                            File = @"http://music.163.com/song/media/outer/url?id=" + t["id"] + ".mp3",
+                            Type = 1/*网页音乐*/
+                        });
                 }
-                catch { }
+                Console.WriteLine();
             }
+            catch { }
 
             return (playlistInfo, songs);
         }

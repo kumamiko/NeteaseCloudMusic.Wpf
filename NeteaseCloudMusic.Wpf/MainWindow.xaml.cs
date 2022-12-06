@@ -409,5 +409,30 @@ namespace NeteaseCloudMusic.Wpf
         {
             borderPlayingList.Visibility = borderPlayingList.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         }
+
+        private void ChangeVolume(object sender, MouseWheelEventArgs e)
+        {
+            if(e.Delta > 0 && media.Volume < 1)
+            {
+                media.Volume += 0.1;
+            }
+            else if(e.Delta < 0 && media.Volume > 0)
+            {
+                media.Volume -= 0.1;
+            }
+        }
+
+        private void ChangePopVolumeState(object sender, MouseButtonEventArgs e)
+        {
+            if(popVolume.Visibility == Visibility.Hidden)
+            {
+                popVolume.Visibility = Visibility.Visible;
+                (this.FindResource("ShowVolume") as Storyboard).Begin();
+            }
+            else
+            {
+                popVolume.Visibility = Visibility.Hidden;
+            }
+        }
     }
 }

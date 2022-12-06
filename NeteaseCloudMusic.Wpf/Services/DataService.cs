@@ -1,6 +1,7 @@
 ﻿using LiteDB;
 using NeteaseCloudMusic.Wpf.Model;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NeteaseCloudMusic.Wpf.Services
 {
@@ -9,11 +10,11 @@ namespace NeteaseCloudMusic.Wpf.Services
         private readonly string _path = "Data.db";
 
         #region Music
-        public IEnumerable<MusicInfo> GetAllMusic()
+        public List<MusicInfo> GetAllMusic()
         {
             using (var db = new LiteDatabase(_path))
             {
-                return db.GetCollection<MusicInfo>("musics").Find(Query.All());
+                return db.GetCollection<MusicInfo>("musics").Find(Query.All())?.ToList() ?? new List<MusicInfo>();
             }
         }
 
@@ -31,7 +32,7 @@ namespace NeteaseCloudMusic.Wpf.Services
             using (var db = new LiteDatabase(_path))
             {
                 var col = db.GetCollection<MusicInfo>("musics");
-                col.Delete(Query.EQ("Id", history.Id));
+                col.DeleteMany(Query.EQ("Id", history.Id));
             }
         }
 
@@ -58,7 +59,7 @@ namespace NeteaseCloudMusic.Wpf.Services
             using (var db = new LiteDatabase(_path))
             {
                 var col = db.GetCollection<MusicInfo>("musics");
-                col.Delete(Query.EQ("Type", 0));
+                col.DeleteMany(Query.EQ("Type", 0));
             }
         }
         #endregion
@@ -74,11 +75,11 @@ namespace NeteaseCloudMusic.Wpf.Services
             }
         }
 
-        public IEnumerable<History> GetAllHistory()
+        public List<History> GetAllHistory()
         {
             using (var db = new LiteDatabase(_path))
             {
-                return db.GetCollection<History>("histories").Find(Query.All("CreateTime", Query.Descending));
+                return db.GetCollection<History>("histories").Find(Query.All("CreateTime", Query.Descending))?.ToList() ?? new List<History>();
             }
         }
 
@@ -87,7 +88,7 @@ namespace NeteaseCloudMusic.Wpf.Services
             using (var db = new LiteDatabase(_path))
             {
                 var col = db.GetCollection<History>("histories");
-                col.Delete(Query.Contains("Keyword", history.Keyword));
+                col.DeleteMany(Query.Contains("Keyword", history.Keyword));
             }
         }
 

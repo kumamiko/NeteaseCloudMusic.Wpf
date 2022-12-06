@@ -187,11 +187,18 @@ namespace NeteaseCloudMusic.Wpf.Model
         private string _name;
         private string _publishTime;
         private string _artist;
+        private int _trackCount;
 
         public int Id
         {
             get => _id;
             set => Set(ref _id, value);
+        }
+
+        public int TrackCount
+        {
+            get => _trackCount;
+            set => Set(ref _trackCount, value);
         }
 
         public string PicUrl

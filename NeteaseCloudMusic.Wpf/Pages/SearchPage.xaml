@@ -1,22 +1,23 @@
-﻿<Page x:Class="NeteaseCloudMusic.Wpf.Pages.SearchPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:NeteaseCloudMusic.Wpf.Pages"
-      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-      xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
-      xmlns:controls="clr-namespace:NeteaseCloudMusic.Wpf.Controls"
-      xmlns:behaviors="clr-namespace:NeteaseCloudMusic.Wpf.Behaviors"
-      DataContext="{Binding Source={StaticResource Locator}, Path=Search}"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="SearchPage">
+﻿<Page
+    x:Class="NeteaseCloudMusic.Wpf.Pages.SearchPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:behaviors="clr-namespace:NeteaseCloudMusic.Wpf.Behaviors"
+    xmlns:controls="clr-namespace:NeteaseCloudMusic.Wpf.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:NeteaseCloudMusic.Wpf.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="SearchPage"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    DataContext="{Binding Source={StaticResource Locator}, Path=Search}"
+    mc:Ignorable="d">
     <Page.Resources>
         <ContextMenu x:Key="TextBoxContextMenu">
-            <MenuItem Command="Cut"/>
-            <MenuItem Command="Copy"/>
-            <MenuItem Command="Paste"/>
+            <MenuItem Command="Cut" />
+            <MenuItem Command="Copy" />
+            <MenuItem Command="Paste" />
         </ContextMenu>
     </Page.Resources>
     <Grid Background="#fafafc">
@@ -25,287 +26,319 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid>
-            <Border BorderBrush="#dddde1" BorderThickness="1"
-                    Margin="30 20 30 0"  Background="White">
+            <Border
+                Margin="30,20,30,0"
+                Background="White"
+                BorderBrush="#dddde1"
+                BorderThickness="1">
                 <Grid>
-                    <TextBlock Text="搜索音乐" VerticalAlignment="Center" FontSize="15" Padding="8 0"
-                                   Foreground="#cccccc"
-                                   Visibility="{Binding ElementName=txtSearch,Path=Text, Converter={StaticResource TextToCollapsedConverter}}"/>
-                    <TextBox Background="Transparent" BorderThickness="0" Height="44"
-                                 FontSize="15" VerticalContentAlignment="Center"
-                                 Foreground="#333"
-                                 Padding="8 0"
-                                 ContextMenu="{StaticResource TextBoxContextMenu}"
-                                 Text="{Binding Keyword,UpdateSourceTrigger=PropertyChanged}"
-                                 x:Name="txtSearch">
+                    <TextBlock
+                        Padding="8,0"
+                        VerticalAlignment="Center"
+                        FontSize="15"
+                        Foreground="#cccccc"
+                        Text="搜索音乐"
+                        Visibility="{Binding ElementName=txtSearch, Path=Text, Converter={StaticResource TextToCollapsedConverter}}" />
+                    <TextBox
+                        x:Name="txtSearch"
+                        Height="44"
+                        Padding="8,0"
+                        VerticalContentAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        ContextMenu="{StaticResource TextBoxContextMenu}"
+                        FontSize="15"
+                        Foreground="#333"
+                        Text="{Binding Keyword, UpdateSourceTrigger=PropertyChanged}">
                         <TextBox.InputBindings>
-                            <KeyBinding 
-                                        Key="Enter" 
-                                        Command="{Binding SearchCmd}" />
-                            <KeyBinding 
-                                        Key="Esc" 
-                                        Command="{Binding ClearKeywordCmd}" />
+                            <KeyBinding Key="Enter" Command="{Binding SearchCmd}" />
+                            <KeyBinding Key="Esc" Command="{Binding ClearKeywordCmd}" />
                         </TextBox.InputBindings>
                     </TextBox>
-                    <Button Width="35" 
-                                FontFamily="{StaticResource SegoeAssets}"
-                                Style="{StaticResource ScaleButton}"
-                                Content="&#xE10A;"
-                                Foreground="#888"
-                                HorizontalAlignment="Right"
-                                Margin="0 0 30 0"
-                                VerticalAlignment="Center"
-                                FontSize="15"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Visibility="{Binding ElementName=txtSearch,Path=Text, Converter={StaticResource TextToVisibilityConverter}}"
-                                Command="{Binding ClearKeywordCmd}"/>
-                    <Button Width="35" 
-                            FontFamily="{StaticResource SegoeAssets}"
-                            Style="{StaticResource ScaleButton}"
-                            Content="&#xE094;"
-                            Foreground="#ccc"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            FontSize="19"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            Command="{Binding SearchCmd}"
-                            />
+                    <Button
+                        Width="35"
+                        Margin="0,0,30,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding ClearKeywordCmd}"
+                        Content="&#xE10A;"
+                        FontFamily="{StaticResource SegoeAssets}"
+                        FontSize="15"
+                        Foreground="#888"
+                        Style="{StaticResource ScaleButton}"
+                        Visibility="{Binding ElementName=txtSearch, Path=Text, Converter={StaticResource TextToVisibilityConverter}}" />
+                    <Button
+                        Width="35"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding SearchCmd}"
+                        Content="&#xE094;"
+                        FontFamily="{StaticResource SegoeAssets}"
+                        FontSize="19"
+                        Foreground="#ccc"
+                        Style="{StaticResource ScaleButton}" />
                 </Grid>
             </Border>
         </Grid>
-        <Grid Grid.Row="1" Margin="0 25 0 0">
+        <Grid Grid.Row="1" Margin="0,25,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <!--热门搜索-->
-            <Grid Margin="30 0 0 0">
+            <!--  热门搜索  -->
+            <Grid Margin="30,0,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="34" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <Border BorderBrush="#dddde1" BorderThickness="0 0 0 1">
-                    <TextBlock Text="热门搜索" VerticalAlignment="Center" FontSize="15" Padding="0 8"
-                               Foreground="#666"/>
+                <Border BorderBrush="#dddde1" BorderThickness="0,0,0,1">
+                    <TextBlock
+                        Padding="0,8"
+                        VerticalAlignment="Center"
+                        FontSize="15"
+                        Foreground="#666"
+                        Text="热门搜索" />
                 </Border>
 
-                <WrapPanel Grid.Row="1" Margin="0 20 0 0">
-                    <!--热门搜索-->
-                    <TextBlock Text="根本没有什么热门..."/>
+                <WrapPanel Grid.Row="1" Margin="0,20,0,0">
+                    <!--  热门搜索  -->
+                    <TextBlock Text="根本没有什么热门..." />
                 </WrapPanel>
             </Grid>
-            <!--搜索历史-->
-            <Grid Grid.Column="1" Margin="40 0 30 0">
+            <!--  搜索历史  -->
+            <Grid Grid.Column="1" Margin="40,0,30,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="34" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <Border BorderBrush="#dddde1" BorderThickness="0 0 0 1">
+                <Border BorderBrush="#dddde1" BorderThickness="0,0,0,1">
                     <Grid>
 
-                        <TextBlock Text="搜索历史" VerticalAlignment="Center" FontSize="15" Padding="0 8"
-                               Foreground="#666"/>
-                        <Button FontFamily="{StaticResource SegoeAssets}"
-                                Content="&#xE107;"
-                                Style="{StaticResource ScaleButton}"
-                                Foreground="#666"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                FontSize="17"
-                                BorderThickness="0"
-                                Background="Transparent"
-                                SnapsToDevicePixels="True"
-                                Command="{Binding ClearHistoryCmd}"
-                                />
+                        <TextBlock
+                            Padding="0,8"
+                            VerticalAlignment="Center"
+                            FontSize="15"
+                            Foreground="#666"
+                            Text="搜索历史" />
+                        <Button
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding ClearHistoryCmd}"
+                            Content="&#xE107;"
+                            FontFamily="{StaticResource SegoeAssets}"
+                            FontSize="17"
+                            Foreground="#666"
+                            SnapsToDevicePixels="True"
+                            Style="{StaticResource ScaleButton}" />
                     </Grid>
                 </Border>
-                <ScrollViewer Grid.Row="1" Margin="0 10 0 0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                    <ItemsControl 
-                            ItemTemplate="{StaticResource HistoryTemplate}"
-                            ItemsSource="{Binding Histories}">
-                    </ItemsControl>
+                <ScrollViewer
+                    Grid.Row="1"
+                    Margin="0,10,0,0"
+                    HorizontalScrollBarVisibility="Disabled"
+                    VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemTemplate="{StaticResource HistoryTemplate}" ItemsSource="{Binding Histories}" />
                 </ScrollViewer>
             </Grid>
-            <Border Background="#fafafc"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Margin="30 -10 30 0"
-                    Visibility="{Binding Text,ElementName=txtSearch,Converter={StaticResource TextToVisibilityConverter}}">
-                <controls:AnimatedTab BorderThickness="0"
-                                      SelectedIndex="{Binding SearchTabIndex}"
-                                      Background="Transparent"
-                                      x:Name="tab">
-                    <i:Interaction.Behaviors>
-                        <behaviors:AnimatedTabChangeBehavior/>
-                    </i:Interaction.Behaviors>
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <cmd:EventToCommand Command="{Binding ChangeTabSelectionCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=TabControl},Path=SelectedIndex }"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
+            <Border
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="30,-10,30,0"
+                Background="#fafafc"
+                Visibility="{Binding Text, ElementName=txtSearch, Converter={StaticResource TextToVisibilityConverter}}">
+                <controls:AnimatedTab
+                    x:Name="tab"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    SelectedIndex="{Binding SearchTabIndex}">
+                    <b:Interaction.Behaviors>
+                        <behaviors:AnimatedTabChangeBehavior />
+                    </b:Interaction.Behaviors>
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="SelectionChanged">
+                            <b:InvokeCommandAction Command="{Binding ChangeTabSelectionCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=TabControl}, Path=SelectedIndex}" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
                     <TabItem Header="单曲">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="40" />
                             </Grid.RowDefinitions>
-                            <ContentControl ContentTemplate="{StaticResource Viewbox.Blank.Template}"
-                                            Visibility="{Binding Musics.Count, Converter={StaticResource IntToCollapsedConverter}}"/>
-                            <ListView Grid.Row="0"
-                                      Background="Transparent"
-                                      BorderThickness="0" AlternationCount="2"
-                                      ItemTemplate="{StaticResource SearchMusicTemplate}"
-                                      ItemContainerStyle="{StaticResource ListViewMusicItem}"
-                                      ItemsSource="{Binding Musics}"
-                                      SelectionMode="Extended"
-                                      Width="{Binding ElementName=tab, Path=ActualWidth}"
-                                      SelectionChanged="StopSelectionChangedEventBubbling">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="MouseDoubleClick">
-                                        <cmd:EventToCommand Command="{Binding ChangeSelectMusicCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView},Path=SelectedItem }"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
+                            <ContentControl ContentTemplate="{StaticResource Viewbox.Blank.Template}" Visibility="{Binding Musics.Count, Converter={StaticResource IntToCollapsedConverter}}" />
+                            <ListView
+                                Grid.Row="0"
+                                Width="{Binding ElementName=tab, Path=ActualWidth}"
+                                AlternationCount="2"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                ItemContainerStyle="{StaticResource ListViewMusicItem}"
+                                ItemTemplate="{StaticResource SearchMusicTemplate}"
+                                ItemsSource="{Binding Musics}"
+                                SelectionChanged="StopSelectionChangedEventBubbling"
+                                SelectionMode="Extended">
+                                <b:Interaction.Triggers>
+                                    <b:EventTrigger EventName="MouseDoubleClick">
+                                        <b:InvokeCommandAction Command="{Binding ChangeSelectMusicCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItem}" />
+                                    </b:EventTrigger>
+                                </b:Interaction.Triggers>
                                 <ListView.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem Header="添加到播放列表" Command="{Binding AddToPlaylistCmd}" 
-                                                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}},
-                                                  Path=PlacementTarget.SelectedItems}"/>
-                                        <Separator/>
-                                        <MenuItem Header="收藏" Command="{Binding NotYetCmd}"/>
-                                        <MenuItem Header="评论" Command="{Binding NotYetCmd}"/>
-                                        <MenuItem Header="分享" Command="{Binding NotYetCmd}"/>
-                                        <Separator/>
-                                        <MenuItem Command="{Binding NavigateToArtistCmd}"
-                                                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}},
-                                                  Path=PlacementTarget.SelectedItem.ArtistIds}">
+                                        <MenuItem
+                                            Command="{Binding AddToPlaylistCmd}"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.SelectedItems}"
+                                            Header="添加到播放列表" />
+                                        <Separator />
+                                        <MenuItem Command="{Binding NotYetCmd}" Header="收藏" />
+                                        <MenuItem Command="{Binding NotYetCmd}" Header="评论" />
+                                        <MenuItem Command="{Binding NotYetCmd}" Header="分享" />
+                                        <Separator />
+                                        <MenuItem Command="{Binding NavigateToArtistCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.SelectedItem.ArtistIds}">
                                             <MenuItem.Header>
                                                 <TextBlock>
-                                        <Run Text="歌手："/>
-                                        <Run Text="{Binding Path=PlacementTarget.SelectedItem.Artist, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                                    <Run Text="歌手：" />
+                                                    <Run Text="{Binding Path=PlacementTarget.SelectedItem.Artist, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
                                                 </TextBlock>
                                             </MenuItem.Header>
                                         </MenuItem>
-                                        <MenuItem Command="{Binding NavigateToAlbumCmd}"
-                                                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}},
-                                                  Path=PlacementTarget.SelectedItem.AlbumId}">
+                                        <MenuItem Command="{Binding NavigateToAlbumCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.SelectedItem.AlbumId}">
                                             <MenuItem.Header>
                                                 <TextBlock>
-                                        <Run Text="专辑："/>
-                                        <Run Text="{Binding Path=PlacementTarget.SelectedItem.Album, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                                                    <Run Text="专辑：" />
+                                                    <Run Text="{Binding Path=PlacementTarget.SelectedItem.Album, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
                                                 </TextBlock>
                                             </MenuItem.Header>
                                         </MenuItem>
-                                        <MenuItem Header="查看MV"
-                                                  Visibility="{Binding Path=PlacementTarget.SelectedItem.MvId, RelativeSource={RelativeSource AncestorType=ContextMenu},Converter={StaticResource IntToVisibilityConverter}}"
-                                                  Command="{Binding NavigateToMvCmd}"
-                                                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}},
-                                                  Path=PlacementTarget.SelectedItem.MvId}"/>
-                                        <Separator/>
-                                        <MenuItem Header="添加到本地音乐" Command="{Binding AddToListCmd}" 
-                                                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}},
-                                                    Path=PlacementTarget.SelectedItems}"/>
-                                        <MenuItem Header="下载" Command="{Binding AddToDownloadCmd}" 
-                                                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}},
-                                                  Path=PlacementTarget.SelectedItems}"/>
+                                        <MenuItem
+                                            Command="{Binding NavigateToMvCmd}"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.SelectedItem.MvId}"
+                                            Header="查看MV"
+                                            Visibility="{Binding Path=PlacementTarget.SelectedItem.MvId, RelativeSource={RelativeSource AncestorType=ContextMenu}, Converter={StaticResource IntToVisibilityConverter}}" />
+                                        <Separator />
+                                        <MenuItem
+                                            Command="{Binding AddToListCmd}"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.SelectedItems}"
+                                            Header="添加到本地音乐" />
+                                        <MenuItem
+                                            Command="{Binding AddToDownloadCmd}"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.SelectedItems}"
+                                            Header="下载" />
                                     </ContextMenu>
                                 </ListView.ContextMenu>
                             </ListView>
-                            <Button Grid.Row="1" Style="{StaticResource ColorScaleButton}"
-                                    HorizontalAlignment="Center"
-                                    BorderBrush="#c62e2e"
-                                    BorderThickness="1"
-                                    Background="Transparent"
-                                    Padding="30 0"
-                                    Height="32"
-                                    Foreground="#c62e2e"
-                                    Content="继续加载"
-                                    Visibility="{Binding Musics.Count, Converter={StaticResource IntToVisibilityConverter}}"
-                                    Command="{Binding SearchMoreCmd}"/>
+                            <Button
+                                Grid.Row="1"
+                                Height="32"
+                                Padding="30,0"
+                                HorizontalAlignment="Center"
+                                Background="Transparent"
+                                BorderBrush="#c62e2e"
+                                BorderThickness="1"
+                                Command="{Binding SearchMoreCmd}"
+                                Content="继续加载"
+                                Foreground="#c62e2e"
+                                Style="{StaticResource ColorScaleButton}"
+                                Visibility="{Binding Musics.Count, Converter={StaticResource IntToVisibilityConverter}}" />
                         </Grid>
                     </TabItem>
                     <TabItem Header="歌手">
                         <Grid>
                             <Grid.Resources>
-                                <Style x:Key="ListViewMusicItem" BasedOn="{StaticResource ListViewMusicItem}" TargetType="ListViewItem">
-                                    <Setter Property="Height" Value="68"/>
+                                <Style
+                                    x:Key="ListViewMusicItem"
+                                    BasedOn="{StaticResource ListViewMusicItem}"
+                                    TargetType="ListViewItem">
+                                    <Setter Property="Height" Value="68" />
                                 </Style>
                             </Grid.Resources>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="40" />
                             </Grid.RowDefinitions>
-                            <ContentControl ContentTemplate="{StaticResource Viewbox.Blank.Template}"
-                                            Visibility="{Binding Artists.Count, Converter={StaticResource IntToCollapsedConverter}}"/>
-                            <ListView Grid.Row="0"
-                                      Background="Transparent"
-                                      BorderThickness="0" AlternationCount="2"
-                                      ItemTemplate="{StaticResource SearchArtistTemplate}"
-                                      ItemContainerStyle="{StaticResource ListViewMusicItem}"
-                                      ItemsSource="{Binding Artists}"
-                                      SelectionMode="Single"
-                                      Width="{Binding ElementName=tab, Path=ActualWidth}"
-                                      SelectionChanged="StopSelectionChangedEventBubbling">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="MouseLeftButtonUp">
-                                        <cmd:EventToCommand Command="{Binding NavigateToArtistCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView},Path=SelectedItem.Id }"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
+                            <ContentControl ContentTemplate="{StaticResource Viewbox.Blank.Template}" Visibility="{Binding Artists.Count, Converter={StaticResource IntToCollapsedConverter}}" />
+                            <ListView
+                                Grid.Row="0"
+                                Width="{Binding ElementName=tab, Path=ActualWidth}"
+                                AlternationCount="2"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                ItemContainerStyle="{StaticResource ListViewMusicItem}"
+                                ItemTemplate="{StaticResource SearchArtistTemplate}"
+                                ItemsSource="{Binding Artists}"
+                                SelectionChanged="StopSelectionChangedEventBubbling"
+                                SelectionMode="Single">
+                                <b:Interaction.Triggers>
+                                    <b:EventTrigger EventName="MouseLeftButtonUp">
+                                        <b:InvokeCommandAction Command="{Binding NavigateToArtistCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItem.Id}" />
+                                    </b:EventTrigger>
+                                </b:Interaction.Triggers>
                             </ListView>
-                            <Button Grid.Row="1" Style="{StaticResource ColorScaleButton}"
-                                    HorizontalAlignment="Center"
-                                    BorderBrush="#c62e2e"
-                                    BorderThickness="1"
-                                    Background="Transparent"
-                                    Padding="30 0"
-                                    Height="32"
-                                    Foreground="#c62e2e"
-                                    Content="继续加载"
-                                    Visibility="{Binding Artists.Count, Converter={StaticResource IntToVisibilityConverter}}"
-                                    Command="{Binding SearchMoreCmd}"/>
+                            <Button
+                                Grid.Row="1"
+                                Height="32"
+                                Padding="30,0"
+                                HorizontalAlignment="Center"
+                                Background="Transparent"
+                                BorderBrush="#c62e2e"
+                                BorderThickness="1"
+                                Command="{Binding SearchMoreCmd}"
+                                Content="继续加载"
+                                Foreground="#c62e2e"
+                                Style="{StaticResource ColorScaleButton}"
+                                Visibility="{Binding Artists.Count, Converter={StaticResource IntToVisibilityConverter}}" />
                         </Grid>
                     </TabItem>
                     <TabItem Header="专辑">
                         <Grid>
                             <Grid.Resources>
-                                <Style x:Key="ListViewMusicItem" BasedOn="{StaticResource ListViewMusicItem}" TargetType="ListViewItem">
-                                    <Setter Property="Height" Value="68"/>
+                                <Style
+                                    x:Key="ListViewMusicItem"
+                                    BasedOn="{StaticResource ListViewMusicItem}"
+                                    TargetType="ListViewItem">
+                                    <Setter Property="Height" Value="68" />
                                 </Style>
                             </Grid.Resources>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="40" />
                             </Grid.RowDefinitions>
-                            <ContentControl ContentTemplate="{StaticResource Viewbox.Blank.Template}"
-                                            Visibility="{Binding Albums.Count, Converter={StaticResource IntToCollapsedConverter}}"/>
-                            <ListView Grid.Row="0"
-                                      Background="Transparent"
-                                      BorderThickness="0" AlternationCount="2"
-                                      ItemTemplate="{StaticResource SearchAlbumTemplate}"
-                                      ItemContainerStyle="{StaticResource ListViewMusicItem}"
-                                      ItemsSource="{Binding Albums}"
-                                      SelectionMode="Single"
-                                      Width="{Binding ElementName=tab, Path=ActualWidth}"
-                                      SelectionChanged="StopSelectionChangedEventBubbling">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="MouseLeftButtonUp">
-                                        <cmd:EventToCommand Command="{Binding NavigateToAlbumCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView},Path=SelectedItem.Id }"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
+                            <ContentControl ContentTemplate="{StaticResource Viewbox.Blank.Template}" Visibility="{Binding Albums.Count, Converter={StaticResource IntToCollapsedConverter}}" />
+                            <ListView
+                                Grid.Row="0"
+                                Width="{Binding ElementName=tab, Path=ActualWidth}"
+                                AlternationCount="2"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                ItemContainerStyle="{StaticResource ListViewMusicItem}"
+                                ItemTemplate="{StaticResource SearchAlbumTemplate}"
+                                ItemsSource="{Binding Albums}"
+                                SelectionChanged="StopSelectionChangedEventBubbling"
+                                SelectionMode="Single">
+                                <b:Interaction.Triggers>
+                                    <b:EventTrigger EventName="MouseLeftButtonUp">
+                                        <b:InvokeCommandAction Command="{Binding NavigateToAlbumCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItem.Id}" />
+                                    </b:EventTrigger>
+                                </b:Interaction.Triggers>
                             </ListView>
-                            <Button Grid.Row="1" 
-                                    Style="{StaticResource ColorScaleButton}"
-                                    HorizontalAlignment="Center"
-                                    BorderBrush="#c62e2e"
-                                    BorderThickness="1"
-                                    Background="Transparent"
-                                    Padding="30 0"
-                                    Height="32"
-                                    Foreground="#c62e2e"
-                                    Content="继续加载"
-                                    Visibility="{Binding Albums.Count, Converter={StaticResource IntToVisibilityConverter}}"
-                                    Command="{Binding SearchMoreCmd}"/>
+                            <Button
+                                Grid.Row="1"
+                                Height="32"
+                                Padding="30,0"
+                                HorizontalAlignment="Center"
+                                Background="Transparent"
+                                BorderBrush="#c62e2e"
+                                BorderThickness="1"
+                                Command="{Binding SearchMoreCmd}"
+                                Content="继续加载"
+                                Foreground="#c62e2e"
+                                Style="{StaticResource ColorScaleButton}"
+                                Visibility="{Binding Albums.Count, Converter={StaticResource IntToVisibilityConverter}}" />
                         </Grid>
                     </TabItem>
                     <TabItem Header="MV">
@@ -314,87 +347,98 @@
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="40" />
                             </Grid.RowDefinitions>
-                            <ContentControl ContentTemplate="{StaticResource Viewbox.Blank.Template}"
-                                            Visibility="{Binding Mvs.Count, Converter={StaticResource IntToCollapsedConverter}}"/>
-                            <ListView Grid.Row="0"
-                                      Background="Transparent"
-                                      BorderThickness="0" AlternationCount="2"
-                                      ItemTemplate="{StaticResource SearchMvTemplate}"
-                                      ItemContainerStyle="{StaticResource ListViewMvItem}"
-                                      ItemsSource="{Binding Mvs}"
-                                      SelectionMode="Single"
-                                      Width="{Binding ElementName=tab, Path=ActualWidth}"
-                                      SelectionChanged="StopSelectionChangedEventBubbling">
+                            <ContentControl ContentTemplate="{StaticResource Viewbox.Blank.Template}" Visibility="{Binding Mvs.Count, Converter={StaticResource IntToCollapsedConverter}}" />
+                            <ListView
+                                Grid.Row="0"
+                                Width="{Binding ElementName=tab, Path=ActualWidth}"
+                                AlternationCount="2"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                ItemContainerStyle="{StaticResource ListViewMvItem}"
+                                ItemTemplate="{StaticResource SearchMvTemplate}"
+                                ItemsSource="{Binding Mvs}"
+                                SelectionChanged="StopSelectionChangedEventBubbling"
+                                SelectionMode="Single">
                                 <ListView.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <WrapPanel IsItemsHost="True"/>
+                                        <WrapPanel IsItemsHost="True" />
                                     </ItemsPanelTemplate>
                                 </ListView.ItemsPanel>
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="MouseLeftButtonUp">
-                                        <cmd:EventToCommand Command="{Binding NavigateToMvCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView},Path=SelectedItem.Id }"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
+                                <b:Interaction.Triggers>
+                                    <b:EventTrigger EventName="MouseLeftButtonUp">
+                                        <b:InvokeCommandAction Command="{Binding NavigateToMvCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItem.Id}" />
+                                    </b:EventTrigger>
+                                </b:Interaction.Triggers>
                             </ListView>
-                            <Button Grid.Row="1" Style="{StaticResource ColorScaleButton}"
-                                    HorizontalAlignment="Center"
-                                    BorderBrush="#c62e2e"
-                                    BorderThickness="1"
-                                    Background="Transparent"
-                                    Padding="30 0"
-                                    Height="32"
-                                    Foreground="#c62e2e"
-                                    Content="继续加载"
-                                    Visibility="{Binding Mvs.Count, Converter={StaticResource IntToVisibilityConverter}}"
-                                    Command="{Binding SearchMoreCmd}"/>
+                            <Button
+                                Grid.Row="1"
+                                Height="32"
+                                Padding="30,0"
+                                HorizontalAlignment="Center"
+                                Background="Transparent"
+                                BorderBrush="#c62e2e"
+                                BorderThickness="1"
+                                Command="{Binding SearchMoreCmd}"
+                                Content="继续加载"
+                                Foreground="#c62e2e"
+                                Style="{StaticResource ColorScaleButton}"
+                                Visibility="{Binding Mvs.Count, Converter={StaticResource IntToVisibilityConverter}}" />
                         </Grid>
                     </TabItem>
                     <TabItem Header="歌单">
                         <Grid>
                             <Grid.Resources>
-                                <Style x:Key="ListViewMusicItem" BasedOn="{StaticResource ListViewMusicItem}" TargetType="ListViewItem">
-                                    <Setter Property="Height" Value="68"/>
+                                <Style
+                                    x:Key="ListViewMusicItem"
+                                    BasedOn="{StaticResource ListViewMusicItem}"
+                                    TargetType="ListViewItem">
+                                    <Setter Property="Height" Value="68" />
                                 </Style>
                             </Grid.Resources>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="40" />
                             </Grid.RowDefinitions>
-                            <ContentControl ContentTemplate="{StaticResource Viewbox.Blank.Template}"
-                                            Visibility="{Binding Playlists.Count, Converter={StaticResource IntToCollapsedConverter}}"/>
-                            <ListView Grid.Row="0"
-                                      Background="Transparent"
-                                      BorderThickness="0" AlternationCount="2"
-                                      ItemTemplate="{StaticResource SearchPlaylistTemplate}"
-                                      ItemContainerStyle="{StaticResource ListViewMusicItem}"
-                                      ItemsSource="{Binding Playlists}"
-                                      SelectionMode="Single"
-                                      Width="{Binding ElementName=tab, Path=ActualWidth}"
-                                      SelectionChanged="StopSelectionChangedEventBubbling">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="MouseLeftButtonUp">
-                                        <cmd:EventToCommand Command="{Binding NavigateToPlayListCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView},Path=SelectedItem.Id }"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
+                            <ContentControl ContentTemplate="{StaticResource Viewbox.Blank.Template}" Visibility="{Binding Playlists.Count, Converter={StaticResource IntToCollapsedConverter}}" />
+                            <ListView
+                                Grid.Row="0"
+                                Width="{Binding ElementName=tab, Path=ActualWidth}"
+                                AlternationCount="2"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                ItemContainerStyle="{StaticResource ListViewMusicItem}"
+                                ItemTemplate="{StaticResource SearchPlaylistTemplate}"
+                                ItemsSource="{Binding Playlists}"
+                                SelectionChanged="StopSelectionChangedEventBubbling"
+                                SelectionMode="Single">
+                                <b:Interaction.Triggers>
+                                    <b:EventTrigger EventName="MouseLeftButtonUp">
+                                        <b:InvokeCommandAction Command="{Binding NavigateToPlayListCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=SelectedItem.Id}" />
+                                    </b:EventTrigger>
+                                </b:Interaction.Triggers>
                             </ListView>
-                            <Button Grid.Row="1" 
-                                    Style="{StaticResource ColorScaleButton}"
-                                    HorizontalAlignment="Center"
-                                    BorderBrush="#c62e2e"
-                                    BorderThickness="1"
-                                    Background="Transparent"
-                                    Padding="30 0"
-                                    Height="32"
-                                    Foreground="#c62e2e"
-                                    Content="继续加载"
-                                    Visibility="{Binding Playlists.Count, Converter={StaticResource IntToVisibilityConverter}}"
-                                    Command="{Binding SearchMoreCmd}"/>
+                            <Button
+                                Grid.Row="1"
+                                Height="32"
+                                Padding="30,0"
+                                HorizontalAlignment="Center"
+                                Background="Transparent"
+                                BorderBrush="#c62e2e"
+                                BorderThickness="1"
+                                Command="{Binding SearchMoreCmd}"
+                                Content="继续加载"
+                                Foreground="#c62e2e"
+                                Style="{StaticResource ColorScaleButton}"
+                                Visibility="{Binding Playlists.Count, Converter={StaticResource IntToVisibilityConverter}}" />
                         </Grid>
                     </TabItem>
                     <TabItem Header="主播电台" Visibility="Collapsed">
-                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <ContentControl ContentTemplate="{StaticResource Viewbox.Blank.Template}"/>
-                            <TextBlock Text="没做╮(￣▽￣)╭" Foreground="#999"  HorizontalAlignment="Center"/>
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <ContentControl ContentTemplate="{StaticResource Viewbox.Blank.Template}" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Foreground="#999"
+                                Text="没做╮(￣▽￣)╭" />
                         </StackPanel>
                     </TabItem>
                 </controls:AnimatedTab>

@@ -1,8 +1,8 @@
-﻿using NeteaseCloudMusic.Wpf.Controls;
+﻿using Microsoft.Xaml.Behaviors;
+using NeteaseCloudMusic.Wpf.Controls;
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Interactivity;
 using System.Windows.Media.Animation;
 
 namespace NeteaseCloudMusic.Wpf.Behaviors
